@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2024 at 07:55 AM
+-- Generation Time: Apr 06, 2024 at 08:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,17 +54,9 @@ CREATE TABLE `clients` (
   `date_of_birth` date NOT NULL,
   `gender` char(1) NOT NULL,
   `phone_number` varchar(25) NOT NULL,
-  `address` varchar(255) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `clients`
---
-
-INSERT INTO `clients` (`id`, `email`, `password`, `first_name`, `last_name`, `date_of_birth`, `gender`, `phone_number`, `address`, `created`, `modified`) VALUES
-(2, 'dahamsiriwardana18@gmail.com', 'Dahami', 'Dahami', 'Siriwardana', '2024-04-18', 'M', '0451380525', '32 kombi road, clayton south, VIC 3169', '2024-04-06 05:48:12', '2024-04-06 05:48:12');
 
 -- --------------------------------------------------------
 
