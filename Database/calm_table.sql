@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 09:45 AM
+-- Generation Time: Apr 12, 2024 at 04:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,10 +34,10 @@ CREATE TABLE `appointments` (
   `guest_email` varchar(128) DEFAULT NULL,
   `counsellor_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
-  `appoinment_date` date NOT NULL,
-  `appoinment_time` time NOT NULL,
+  `appointment_date` date NOT NULL,
+  `start_time` time NOT NULL,
   `end_time` time NOT NULL,
-  `appoinment_status` enum('Scheduled','Completed','Cancelled') DEFAULT NULL,
+  `appointment_status` enum('Scheduled','Completed','Cancelled') DEFAULT NULL,
   `note` text DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL
@@ -114,7 +114,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `services`
