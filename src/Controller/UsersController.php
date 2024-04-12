@@ -32,9 +32,13 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, contain: []);
+        // Correcting the 'contain' array based on your model associations
+        $user = $this->Users->get($id, [
+            'contain' => ['ClientAppointments', 'CounsellorAppointments']
+        ]);
         $this->set(compact('user'));
-    }
+    } 
+
 
     /**
      * Add method

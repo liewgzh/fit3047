@@ -11,8 +11,6 @@ use Cake\Validation\Validator;
 /**
  * Appointments Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\ServicesTable&\Cake\ORM\Association\BelongsTo $Services
  *
  * @method \App\Model\Entity\Appointment newEmptyEntity()
@@ -48,22 +46,22 @@ class AppointmentsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-        
-        //now Clients 
+
+        $this->belongsTo('Services', [
+            'foreignKey' => 'service_id',
+        ]);
+
         $this->belongsTo('Clients', [
             'className' => 'Users',
             'foreignKey' => 'client_id',
             'conditions' => ['Clients.role' => 'Client'],
         ]);
+
         $this->belongsTo('Counsellors', [
             'className' => 'Users',
             'foreignKey' => 'counsellor_id',
             'joinType' => 'INNER',
-            'conditions' => ['Counsellors.role' => 'Counsellor'],
-        ]);
-        $this->belongsTo('Services', [
-            'foreignKey' => 'service_id',
-            'joinType' => 'INNER',
+            'conditions' => ['Counsellors.role' => 'Counsellor']
         ]);
     }
 
@@ -98,14 +96,14 @@ class AppointmentsTable extends Table
             ->notEmptyString('service_id');
 
         $validator
-            ->date('appoinment_date')
-            ->requirePresence('appoinment_date', 'create')
-            ->notEmptyDate('appoinment_date');
+            ->date('appointment_date')
+            ->requirePresence('appointment_date', 'create')
+            ->notEmptyDate('appointment_date');
 
         $validator
-            ->time('appoinment_time')
-            ->requirePresence('appoinment_time', 'create')
-            ->notEmptyTime('appoinment_time');
+            ->time('start_time')
+            ->requirePresence('start_time', 'create')
+            ->notEmptyTime('start_time');
 
         $validator
             ->time('end_time')
@@ -113,8 +111,8 @@ class AppointmentsTable extends Table
             ->notEmptyTime('end_time');
 
         $validator
-            ->scalar('appoinment_status')
-            ->allowEmptyString('appoinment_status');
+            ->scalar('appointment_status')
+            ->allowEmptyString('appointment_status');
 
         $validator
             ->scalar('note')
@@ -138,4 +136,5 @@ class AppointmentsTable extends Table
 
         return $rules;
     }
+
 }

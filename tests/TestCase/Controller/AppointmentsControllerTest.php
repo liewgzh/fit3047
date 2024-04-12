@@ -23,7 +23,8 @@ class AppointmentsControllerTest extends TestCase
      */
     protected array $fixtures = [
         'app.Appointments',
-        'app.Users',
+        'app.Clients',
+        'app.Counsellors',
         'app.Services',
     ];
 

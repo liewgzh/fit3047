@@ -17,10 +17,10 @@
                     <th><?= $this->Paginator->sort('guest_email') ?></th>
                     <th><?= $this->Paginator->sort('counsellor_id') ?></th>
                     <th><?= $this->Paginator->sort('service_id') ?></th>
-                    <th><?= $this->Paginator->sort('appoinment_date') ?></th>
-                    <th><?= $this->Paginator->sort('appoinment_time') ?></th>
+                    <th><?= $this->Paginator->sort('appointment_date') ?></th>
+                    <th><?= $this->Paginator->sort('start_time') ?></th>
                     <th><?= $this->Paginator->sort('end_time') ?></th>
-                    <th><?= $this->Paginator->sort('appoinment_status') ?></th>
+                    <th><?= $this->Paginator->sort('appointment_status') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th><?= $this->Paginator->sort('modified') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
@@ -35,10 +35,10 @@
                     <td><?= h($appointment->guest_email) ?></td>
                     <td><?= $appointment->hasValue('counsellor') ? $this->Html->link($appointment->counsellor->first_name, ['controller' => 'Users', 'action' => 'view', $appointment->counsellor->id]) : '' ?></td>
                     <td><?= $appointment->hasValue('service') ? $this->Html->link($appointment->service->service_title, ['controller' => 'Services', 'action' => 'view', $appointment->service->id]) : '' ?></td>
-                    <td><?= h($appointment->appoinment_date) ?></td>
-                    <td><?= h($appointment->appoinment_time) ?></td>
+                    <td><?= h($appointment->appointment_date) ?></td>
+                    <td><?= h($appointment->start_time) ?></td>
                     <td><?= h($appointment->end_time) ?></td>
-                    <td><?= h($appointment->appoinment_status) ?></td>
+                    <td><?= h($appointment->appointment_status) ?></td>
                     <td><?= h($appointment->created) ?></td>
                     <td><?= h($appointment->modified) ?></td>
                     <td class="actions">

@@ -42,7 +42,7 @@ class AppointmentsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add()//appointment/add
     {
         $appointment = $this->Appointments->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -57,7 +57,7 @@ class AppointmentsController extends AppController
         $clients = $this->Appointments->Clients->find('list', limit: 200)->all();
         $counsellors = $this->Appointments->Counsellors->find('list', limit: 200)->all();
         $services = $this->Appointments->Services->find('list', limit: 200)->all();
-        $this->set(compact('appointment', 'counsellors','clients','services'));
+        $this->set(compact('appointment', 'clients', 'counsellors', 'services'));
     }
 
     /**
@@ -67,7 +67,7 @@ class AppointmentsController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($id = null) 
     {
         $appointment = $this->Appointments->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -79,9 +79,10 @@ class AppointmentsController extends AppController
             }
             $this->Flash->error(__('The appointment could not be saved. Please, try again.'));
         }
-        $users = $this->Appointments->Users->find('list', limit: 200)->all();
+        $clients = $this->Appointments->Clients->find('list', limit: 200)->all();
+        $counsellors = $this->Appointments->Counsellors->find('list', limit: 200)->all();
         $services = $this->Appointments->Services->find('list', limit: 200)->all();
-        $this->set(compact('appointment', 'users', 'services'));
+        $this->set(compact('appointment', 'clients', 'counsellors', 'services'));
     }
 
     /**

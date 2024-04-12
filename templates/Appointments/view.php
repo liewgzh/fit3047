@@ -19,6 +19,10 @@
             <h3><?= h($appointment->id) ?></h3>
             <table>
                 <tr>
+                    <th><?= __('Client') ?></th>
+                    <td><?= $appointment->hasValue('client') ? $this->Html->link($appointment->client->first_name, ['controller' => 'Users', 'action' => 'view', $appointment->client->id]) : '' ?></td>
+                </tr>
+                <tr>
                     <th><?= __('Guest Name') ?></th>
                     <td><?= h($appointment->guest_name) ?></td>
                 </tr>
@@ -27,32 +31,28 @@
                     <td><?= h($appointment->guest_email) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('User') ?></th>
-                    <td><?= $appointment->hasValue('user') ? $this->Html->link($appointment->user->first_name, ['controller' => 'Users', 'action' => 'view', $appointment->user->id]) : '' ?></td>
+                    <th><?= __('Counsellor') ?></th>
+                    <td><?= $appointment->hasValue('counsellor') ? $this->Html->link($appointment->counsellor->first_name, ['controller' => 'Users', 'action' => 'view', $appointment->counsellor->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Service') ?></th>
                     <td><?= $appointment->hasValue('service') ? $this->Html->link($appointment->service->service_title, ['controller' => 'Services', 'action' => 'view', $appointment->service->id]) : '' ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Appoinment Status') ?></th>
-                    <td><?= h($appointment->appoinment_status) ?></td>
+                    <th><?= __('Appointment Status') ?></th>
+                    <td><?= h($appointment->appointment_status) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
                     <td><?= $this->Number->format($appointment->id) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Client Id') ?></th>
-                    <td><?= $appointment->client_id === null ? '' : $this->Number->format($appointment->client_id) ?></td>
+                    <th><?= __('Appointment Date') ?></th>
+                    <td><?= h($appointment->appointment_date) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Appoinment Date') ?></th>
-                    <td><?= h($appointment->appoinment_date) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Appoinment Time') ?></th>
-                    <td><?= h($appointment->appoinment_time) ?></td>
+                    <th><?= __('Start Time') ?></th>
+                    <td><?= h($appointment->start_time) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('End Time') ?></th>

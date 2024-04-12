@@ -44,6 +44,19 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        
+        $this->hasMany('ClientAppointments', [
+            'className' => 'Appointments',
+            'foreignKey' => 'client_id',
+      
+        ]);
+        $this->hasMany('CounsellorAppointments', [
+            'className' => 'Appointments',
+            'foreignKey' => 'counsellor_id',
+              
+        ]);	
+
     }
 
     /**

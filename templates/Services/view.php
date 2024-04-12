@@ -61,10 +61,10 @@
                             <th><?= __('Guest Email') ?></th>
                             <th><?= __('Counsellor Id') ?></th>
                             <th><?= __('Service Id') ?></th>
-                            <th><?= __('Appoinment Date') ?></th>
-                            <th><?= __('Appoinment Time') ?></th>
+                            <th><?= __('Appointment Date') ?></th>
+                            <th><?= __('Start Time') ?></th>
                             <th><?= __('End Time') ?></th>
-                            <th><?= __('Appoinment Status') ?></th>
+                            <th><?= __('Appointment Status') ?></th>
                             <th><?= __('Note') ?></th>
                             <th><?= __('Created') ?></th>
                             <th><?= __('Modified') ?></th>
@@ -78,10 +78,10 @@
                             <td><?= h($appointment->guest_email) ?></td>
                             <td><?= h($appointment->counsellor_id) ?></td>
                             <td><?= h($appointment->service_id) ?></td>
-                            <td><?= h($appointment->appoinment_date) ?></td>
-                            <td><?= h($appointment->appoinment_time) ?></td>
+                            <td><?= h($appointment->appointment_date) ?></td>
+                            <td><?= h($appointment->start_time) ?></td>
                             <td><?= h($appointment->end_time) ?></td>
-                            <td><?= h($appointment->appoinment_status) ?></td>
+                            <td><?= h($appointment->appointment_status) ?></td>
                             <td><?= h($appointment->note) ?></td>
                             <td><?= h($appointment->created) ?></td>
                             <td><?= h($appointment->modified) ?></td>

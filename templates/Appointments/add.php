@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Appointment $appointment
  * @var \Cake\Collection\CollectionInterface|string[] $clients
- *  @var \Cake\Collection\CollectionInterface|string[] $counsellors
+ * @var \Cake\Collection\CollectionInterface|string[] $counsellors
  * @var \Cake\Collection\CollectionInterface|string[] $services
  */
 ?>
@@ -20,15 +20,15 @@
             <fieldset>
                 <legend><?= __('Add Appointment') ?></legend>
                 <?php
-                    echo $this->Form->control('client_id', ['options' => $clients]);
+                    echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
                     echo $this->Form->control('guest_name');
                     echo $this->Form->control('guest_email');
                     echo $this->Form->control('counsellor_id', ['options' => $counsellors]);
                     echo $this->Form->control('service_id', ['options' => $services]);
-                    echo $this->Form->control('appoinment_date');
-                    echo $this->Form->control('appoinment_time');
+                    echo $this->Form->control('appointment_date');
+                    echo $this->Form->control('start_time');
                     echo $this->Form->control('end_time');
-                    echo $this->Form->control('appoinment_status');
+                    echo $this->Form->control('appointment_status');
                     echo $this->Form->control('note');
                 ?>
             </fieldset>

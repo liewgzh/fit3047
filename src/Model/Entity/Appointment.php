@@ -14,15 +14,16 @@ use Cake\ORM\Entity;
  * @property string|null $guest_email
  * @property int $counsellor_id
  * @property int $service_id
- * @property \Cake\I18n\Date $appoinment_date
- * @property \Cake\I18n\Time $appoinment_time
+ * @property \Cake\I18n\Date $appointment_date
+ * @property \Cake\I18n\Time $start_time
  * @property \Cake\I18n\Time $end_time
- * @property string|null $appoinment_status
+ * @property string|null $appointment_status
  * @property string|null $note
  * @property \Cake\I18n\DateTime|null $created
  * @property \Cake\I18n\DateTime|null $modified
  *
- * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\User $client
+ * @property \App\Model\Entity\User $counsellor
  * @property \App\Model\Entity\Service $service
  */
 class Appointment extends Entity
@@ -42,14 +43,15 @@ class Appointment extends Entity
         'guest_email' => true,
         'counsellor_id' => true,
         'service_id' => true,
-        'appoinment_date' => true,
-        'appoinment_time' => true,
+        'appointment_date' => true,
+        'start_time' => true,
         'end_time' => true,
-        'appoinment_status' => true,
+        'appointment_status' => true,
         'note' => true,
         'created' => true,
         'modified' => true,
-        'user' => true,
+        'client' => true,
+        'counsellor' => true,
         'service' => true,
     ];
 }

@@ -21,6 +21,9 @@ use Cake\ORM\Entity;
  * @property string|null $bio
  * @property \Cake\I18n\DateTime|null $created
  * @property \Cake\I18n\DateTime|null $modified
+ *
+ * @property \App\Model\Entity\Appointment[] $client_appointments
+ * @property \App\Model\Entity\Appointment[] $counsellor_appointments
  */
 class User extends Entity
 {
@@ -46,6 +49,8 @@ class User extends Entity
         'bio' => true,
         'created' => true,
         'modified' => true,
+        'client_appointments' => true,
+        'counsellor_appointments' => true,
     ];
 
     /**
