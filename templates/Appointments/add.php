@@ -26,8 +26,7 @@
                     echo $this->Form->control('counsellor_id', ['options' => $counsellors]);
                     echo $this->Form->control('service_id', ['options' => $services]);
                     echo $this->Form->control('appointment_date');
-                    echo $this->Form->control('start_time');
-                    echo $this->Form->control('end_time');
+                    echo $this->Form->control('start_time');                   
                     echo $this->Form->control('appointment_status');
                     echo $this->Form->control('note');
                 ?>

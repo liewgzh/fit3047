@@ -64,6 +64,28 @@ class AppointmentsTable extends Table
             'conditions' => ['Counsellors.role' => 'Counsellor']
         ]);
     }
+    public function Conflicts($appointment)
+    {
+   
+    $conflicts = $this->find()
+        ->where([
+            'OR' => [
+                [
+                    'start_time <=' => $appointment->start_time,
+                    'end_time >' => $appointment->start_time
+                ],
+                [
+                    'start_time <' => $appointment->end_time,
+                    'end_time >=' => $appointment->end_time
+                ]
+            ],
+            'counsellor_id' => $appointment->counsellor_id,
+            
+        ])
+        ->count();
+
+    return $conflicts > 0; 
+}
 
     /**
      * Default validation rules.
