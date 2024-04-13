@@ -55,6 +55,7 @@ class AppointmentsController extends AppController
         
             $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
             $appointment->end_time = $endTime->format('H:i:s');
+            $appointment->appointment_status="Scheduled";
 
 
             if ($this->Appointments->Conflicts($appointment)) {
