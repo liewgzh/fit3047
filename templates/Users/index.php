@@ -3,26 +3,37 @@
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\User> $users
  */
+ echo $this->Html->css('/vendor/datatables/dataTables.bootstrap4.min.css', ['block' => true]);
+  echo $this->Html->script('/vendor/datatables/jquery.dataTables.min.js', ['block' => true]);
+  echo $this->Html->script('/vendor/datatables/dataTables.bootstrap4.min.js', ['block' => true]);
 ?>
+<!-- new here -->
 <div class="users index content">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"><?= __('Users') ?></h1>
+        <a href="<?= $this->Url->build(['action' => 'add']) ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-plus fa-sm text-white-50"></i> New User</a>
+    </div>
     <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Users') ?></h3>
     <div class="table-responsive">
-        <table>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('first_name') ?></th>
-                    <th><?= $this->Paginator->sort('last_name') ?></th>
-                    <th><?= $this->Paginator->sort('email') ?></th>
-                    <th><?= $this->Paginator->sort('role') ?></th>
-                    <th><?= $this->Paginator->sort('gender') ?></th>
-                    <th><?= $this->Paginator->sort('date_of_birth') ?></th>
-                    <th><?= $this->Paginator->sort('phone_number') ?></th>
-                    <th><?= $this->Paginator->sort('address') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <tr>
+                        <th><?= h('id') ?></th>
+                        <th><?= h('first_name') ?></th>
+                        <th><?= h('last_name') ?></th>
+                        <th><?= h('email') ?></th>
+                        <th><?= h('role') ?></th>
+                        <th><?= h('gender') ?></th>
+                        <th><?= h('date_of_birth') ?></th>
+                        <th><?= h('phone_number') ?></th>
+                        <th><?= h('address') ?></th>
+                        <th><?= h('created') ?></th>
+                        <th><?= h('modified') ?></th>
+                        <th class="actions"><?= __('Actions') ?></th>
+                    </tr>
                 </tr>
             </thead>
             <tbody>
@@ -49,14 +60,9 @@
             </tbody>
         </table>
     </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
+    <script>
+        $(document).ready(function() {
+          $('#dataTable').DataTable();
+        });
+    </script>>
 </div>

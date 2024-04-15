@@ -22,7 +22,7 @@
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <?= $this->Html->script('/vendor/jquery/jquery.min.js') ?>
 
 </head>
 
@@ -48,7 +48,7 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-house-user"></i>
                     <span>Homepage</span></a>
             </li>
 
@@ -60,11 +60,11 @@
                 Services
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Appointments Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-newspaper"></i>
+                    <i class="fas fa-fw fa-calendar-check"></i>
                     <span>Appointments</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -76,21 +76,18 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Seminars Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <i class="fas fa-fw fa-video"></i>
+                    <span>Seminars</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">Seminars</h6>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>">View All Seminars</a>
                     </div>
                 </div>
             </li>
@@ -100,42 +97,60 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                Admin Items
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Users Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Users</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">Manage Users</h6>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>">View All Users</a>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'add']) ?>">Add New User</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
+            <!-- Nav Item - Services -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseServices"
+                    aria-expanded="true" aria-controls="collapseServices">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Services</span>
+                </a>
+                <div id="collapseServices" class="collapse" aria-labelledby="headingServices" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Services</h6>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Services', 'action' => 'index']) ?>">View All Services</a>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Services', 'action' => 'add']) ?>">Add New Service</a>
+                    </div>
+                </div>
             </li>
 
-            <!-- Nav Item - Tables -->
+            <!-- Nav Item - Extras -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseExtras"
+                    aria-expanded="true" aria-controls="collapseExtras">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Extras</span>
+                </a>
+                <div id="collapseExtras" class="collapse" aria-labelledby="headingExtras" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Extras</h6>
+                        <a class="collapse-item" href="#">Item 1</a>
+                        <a class="collapse-item" href="#">Item 2</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -171,8 +186,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <?=$this->Html->image('undraw_profile.svg', ['class' => 'img-profile rounded-circle']) ?>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -241,13 +255,13 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <?= $this->Html->script('/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <?= $this->Html->script('/vendor/jquery-easing/jquery.easing.min.js') ?>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <?= $this->Html->script('sb-admin-2.min') ?>
 
 <?= $this->fetch('script') ?>
 </body>

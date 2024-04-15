@@ -18,7 +18,7 @@ class ServicesController extends AppController
     public function index()
     {
         $query = $this->Services->find();
-        $services = $this->paginate($query);
+        $services = $this->Services->find();
 
         $this->set(compact('services'));
     }

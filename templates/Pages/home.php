@@ -64,7 +64,7 @@ endif;
         <li><a href="#" data-content="counselor">Counsellor</a></li>
         <li><a href="#" data-content="about">About</a></li>
         <li><a href="#" data-content="seminar">Seminar</a></li>
-        <li><a href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'add']) ?>" class="book-button">Book</a></li>
+        <li><a href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'add']) ?>" class="book-button">Book Appointment</a></li>
     </ul>
 </nav>
 
@@ -77,7 +77,11 @@ endif;
     </title>
     <?= $this->Html->meta('icon') ?>
 
+    <!-- I commented the below out due to sidebar font size issues
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake', 'home']) ?>
+    -->
+
+    <?= $this->Html->css('styles.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -101,37 +105,37 @@ endif;
                     <div class="row">
                         <!-- Counselor 1 -->
                         <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image']) ?>
+                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
                             <h3>Counselor 1</h3>
                             <p>Short description or bio of the counselor.</p>
                             <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image']) ?>
+                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
                             <h3>Counselor 2</h3>
                             <p>Short description or bio of the counselor.</p>
                             <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image']) ?>
+                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
                             <h3>Counselor 3</h3>
                             <p>Short description or bio of the counselor.</p>
                             <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image']) ?>
+                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
                             <h3>Counselor 4</h3>
                             <p>Short description or bio of the counselor.</p>
                             <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image']) ?>
+                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
                             <h3>Counselor 5</h3>
                             <p>Short description or bio of the counselor.</p>
                             <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image']) ?>
+                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
                             <h3>Counselor 6</h3>
                             <p>Short description or bio of the counselor.</p>
                             <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>

@@ -18,7 +18,7 @@ class UsersController extends AppController
     public function index()
     {
         $query = $this->Users->find();
-        $users = $this->paginate($query);
+        $users = $this->Users->find();
 
         $this->set(compact('users'));
     }
@@ -37,7 +37,7 @@ class UsersController extends AppController
             'contain' => ['ClientAppointments', 'CounsellorAppointments']
         ]);
         $this->set(compact('user'));
-    } 
+    }
 
 
     /**
