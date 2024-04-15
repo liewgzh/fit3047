@@ -21,7 +21,7 @@ class AppointmentsController extends AppController
     {
         $query = $this->Appointments->find()
             ->contain(['Clients', 'Counsellors', 'Services']);
-        $appointments = $this->paginate($query);
+        $appointments = $this->Appointments->find()->contain(['Clients', 'Counsellors', 'Services']);
 
         $this->set(compact('appointments'));
     }
@@ -52,7 +52,7 @@ class AppointmentsController extends AppController
             $service = $this->Appointments->Services->get($appointment->service_id);
             $startDateTimeStr = $appointment->appointment_date->format('Y-m-d') . ' ' . $appointment->start_time->format('H:i:s');
             $startDateTime = new \DateTime($startDateTimeStr);
-        
+
             $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
             $appointment->end_time = $endTime->format('H:i:s');
             $appointment->appointment_status="Scheduled";
@@ -81,7 +81,7 @@ class AppointmentsController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) 
+    public function edit($id = null)
     {
         $appointment = $this->Appointments->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
