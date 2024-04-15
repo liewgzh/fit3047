@@ -94,7 +94,7 @@
                         <?php foreach ($user->client_appointments as $clientAppointment) : ?>
                         <tr>
                             <td><?= h($clientAppointment->id) ?></td>
-                            <td><?= h($clientAppointment->client_id) ?></td>
+                            <td><?= h($clientAppointment->client->name) ?></td>
                             <td><?= h($clientAppointment->guest_name) ?></td>
                             <td><?= h($clientAppointment->guest_email) ?></td>
                             <td><?= h($clientAppointment->counsellor_id) ?></td>

@@ -49,6 +49,7 @@ class AppointmentsTable extends Table
 
         $this->belongsTo('Services', [
             'foreignKey' => 'service_id',
+           
         ]);
 
         $this->belongsTo('Clients', [
@@ -70,14 +71,21 @@ class AppointmentsTable extends Table
     $conflicts = $this->find()
         ->where([
             'OR' => [
+
+
                 [
                     'start_time <=' => $appointment->start_time,
-                    'end_time >' => $appointment->start_time
+                    'end_time >' => $appointment->start_time,
+                    'appointment_date' => $appointment->appointment_date
+
                 ],
                 [
                     'start_time <' => $appointment->end_time,
-                    'end_time >=' => $appointment->end_time
-                ]
+                    'end_time >=' => $appointment->end_time,
+                    'appointment_date' => $appointment->appointment_date
+
+                ],
+
             ],
             'counsellor_id' => $appointment->counsellor_id,
             

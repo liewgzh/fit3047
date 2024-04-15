@@ -21,13 +21,16 @@
                 
                 <legend><?= __('Add Appointment') ?></legend>
                 <?php
-                    echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
-                    echo $this->Form->control('guest_name');
-                    echo $this->Form->control('guest_email');
+                    echo $this->Form->control('client_id', ['options' => $clients, 'required' => true, 'empty' => true]);
                     echo $this->Form->control('counsellor_id', ['options' => $counsellors]);
                     echo $this->Form->control('service_id', ['options' => $services]);
                     echo $this->Form->control('appointment_date');
-                    echo $this->Form->control('start_time');                   
+                    echo $this->Form->control('start_time', [
+                        'type' => 'time', 
+                        'label' => 'Start Time (9:00 AM to 4:00 PM):',
+                        'min' => '09:00', 
+                        'max' => '16:00',
+                        'required' => true]);                   
                     echo $this->Form->control('note');
                 ?>
             </fieldset>
