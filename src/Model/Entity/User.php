@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Model\Entity;
-use Authentication\PasswordHasher\DefaultPasswordHasher; // Add this line
+use Authentication\PasswordHasher\DefaultPasswordHasher; // Add this line to the doc
 
 
 use Cake\ORM\Entity;
