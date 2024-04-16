@@ -3,3 +3,12 @@
     width: 180px;
     height: auto;
 }
+
+.column {
+    margin: 10px; /* Spacing around each column */
+    padding: 15px; /* Padding inside each column */
+    border: 1px solid #eee; /* Optional border for visual separation */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    background: #fff; /* White background */
+    border-radius: 4px; /* Rounded corners */
+}

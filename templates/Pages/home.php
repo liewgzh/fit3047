@@ -19,6 +19,23 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\Debugger;
 use Cake\Http\Exception\NotFoundException;
+use Cake\ORM\TableRegistry;
+
+
+
+$counselors = []; // Initialize an empty array to hold counselor data
+
+try {
+    // Use the UsersTable to get the counselors
+    $usersTable = TableRegistry::getTableLocator()->get('Users');
+    // Retrieve only the users with the role of 'Counsellor'
+    $counselors = $usersTable->find()
+        ->where(['role' => 'Counsellor'])
+        ->all(); // Execute the query and get all results
+} catch (\Exception $e) {
+    // Handle exception if there's a problem with the database connection
+}
+
 
 //$this->disableAutoLayout();
 
@@ -103,43 +120,22 @@ endif;
             <div id="counselor-content" class="content-section">
                 <section class="counselors">
                     <div class="row">
-                        <!-- Counselor 1 -->
-                        <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
-                            <h3>Counselor 1</h3>
-                            <p>Short description or bio of the counselor.</p>
-                            <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
-                            <h3>Counselor 2</h3>
-                            <p>Short description or bio of the counselor.</p>
-                            <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
-                            <h3>Counselor 3</h3>
-                            <p>Short description or bio of the counselor.</p>
-                            <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
-                            <h3>Counselor 4</h3>
-                            <p>Short description or bio of the counselor.</p>
-                            <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
-                            <h3>Counselor 5</h3>
-                            <p>Short description or bio of the counselor.</p>
-                            <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']) ?>
-                            <h3>Counselor 6</h3>
-                            <p>Short description or bio of the counselor.</p>
-                            <?= $this->Html->link('Learn More', '/counselor-profile', ['class' => 'button']) ?>
-                        </div>
+                        <?php
+                        foreach ($counselors as $counselor) {
+                            $detailUrl = $this->Url->build(['controller' => 'Users', 'action' => 'view', $counselor->id]);
+                            echo '<div class="column">';
+                            // Start of link that wraps the image and the name
+                            echo '<a href="' . h($detailUrl) . '" class="counselor-link">';
+                            echo $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']);
+                            echo '<h3>' . h($counselor->first_name . ' ' . $counselor->last_name) . '</h3>';
+                            // End of link
+                            echo '</a>';
+                            echo '<p>' . h($counselor->bio) . '</p>';
+                            // We can also make the 'Learn More' button a link to the detail page, but it's optional since the image and name are already links
+                            echo $this->Html->link('Learn More', $detailUrl, ['class' => 'button']);
+                            echo '</div>';
+                        }
+                        ?>
                     </div>
                 </section>
             </div>
@@ -156,37 +152,37 @@ endif;
                     <div class="row">
                         <!-- Counselor 1 -->
                         <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image']) ?>
+                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 1</h3>
                             <p>Short description or bio of the Seminar.</p>
                             <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image']) ?>
+                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 2</h3>
                             <p>Short description or bio of the Seminar.</p>
                             <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image']) ?>
+                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 3</h3>
                             <p>Short description or bio of the Seminar.</p>
                             <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image']) ?>
+                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 4</h3>
                             <p>Short description or bio of the Seminar.</p>
                             <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image']) ?>
+                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 5</h3>
                             <p>Short description or bio of the Seminar.</p>
                             <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
                         </div>
                         <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image']) ?>
+                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 6</h3>
                             <p>Short description or bio of the Seminar.</p>
                             <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
