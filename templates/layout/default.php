@@ -39,7 +39,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3"> <sup>Calm Wellness Center</sup></div>
             </a>
 
             <!-- Divider -->
@@ -78,7 +78,7 @@
 
             <!-- Nav Item - Seminars Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                <a class="nav-link collapsed" href="#seminar-content" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-video"></i>
                     <span>Seminars</span>
@@ -87,7 +87,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Seminars</h6>
-                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>">View All Seminars</a>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>#seminar-content">View All Seminars</a>
                     </div>
                 </div>
             </li>

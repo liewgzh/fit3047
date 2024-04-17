@@ -27,10 +27,19 @@ class AppointmentsController extends AppController
     public function index()
     {    $this->Authorization->skipAuthorization();
 
+        $user = $this->request->getAttribute('identity');
+
         $query = $this->Appointments->find()
             ->contain(['Clients', 'Counsellors', 'Services']);
         $appointments = $this->Appointments->find()->contain(['Clients', 'Counsellors', 'Services']);
 
+        if ($user->role === 'Client') {
+            $query->where(['client_id' => $user->id]);
+        } elseif ($user->role === 'Counsellor') {
+            $query->where(['counsellor_id' => $user->id]);
+        }
+
+        $appointments = $query->all();
 
         $this->set(compact('appointments'));
     }
@@ -43,7 +52,7 @@ class AppointmentsController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
-    {   
+    {
          $this->Authorization->skipAuthorization();
 
         $appointment = $this->Appointments->get($id, contain: ['Clients', 'Counsellors', 'Services']);
@@ -82,7 +91,18 @@ class AppointmentsController extends AppController
                 $this->Flash->error(__('The appointment could not be saved. Please, try again.'));
             }
         }
-        $clients = $this->Appointments->Clients->find('list', limit: 200)->all();
+        //$clients = $this->Appointments->Clients->find('list', limit: 200)->all();
+
+        $user = $this->request->getAttribute('identity');
+            $clients = [];
+            if ($user->role === 'Client') {
+                // If the logged-in user is a client, show only their name in the client dropdown
+                $clients[$user->id] = $user->first_name . ' ' . $user->last_name;
+            } else {
+                // Otherwise, fetch all clients' data
+                $clients = $this->Appointments->Clients->find('list', ['limit' => 200])->all();
+            }
+
         $counsellors = $this->Appointments->Counsellors->find('list', limit: 200)->all();
         $services = $this->Appointments->Services->find('list', limit: 200)->all();
         $this->set(compact('appointment', 'clients', 'counsellors', 'services'));
@@ -151,7 +171,7 @@ class AppointmentsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     public function guestadd()//appointment/add
-    {   
+    {
         $this->Authorization->skipAuthorization();
         $appointment = $this->Appointments->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -159,7 +179,7 @@ class AppointmentsController extends AppController
             $service = $this->Appointments->Services->get($appointment->service_id);
             $startDateTimeStr = $appointment->appointment_date->format('Y-m-d') . ' ' . $appointment->start_time->format('H:i:s');
             $startDateTime = new \DateTime($startDateTimeStr);
-        
+
             $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
             $appointment->end_time = $endTime->format('H:i:s');
             $appointment->appointment_status="Scheduled";
@@ -175,7 +195,7 @@ class AppointmentsController extends AppController
                 $this->Flash->error(__('The appointment could not be saved. Please, try again.'));
             }
         }
-        
+
         $counsellors = $this->Appointments->Counsellors->find('list', limit: 200)->all();
         $services = $this->Appointments->Services->find('list', limit: 200)->all();
         $this->set(compact('appointment', 'counsellors', 'services'));
