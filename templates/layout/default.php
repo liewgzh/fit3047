@@ -110,8 +110,24 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage Users</h6>
+                        <?php if (!$this->request->getAttribute('identity')) : ?>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login']) ?>">Login</a>
+                            <?php endif; ?>
+                        
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>">View All Users</a>
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'add']) ?>">Register New Account</a>
+                        <?php
+
+                        $identity = $this->request->getAttribute('identity');
+                        if ($identity) {
+                        $userId = $identity->getIdentifier();
+                        ?>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'view', $userId]) ?>">View My Profile</a>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'edit', $userId]) ?>">Edit My Profile</a>
+                        <?php
+                        }
+                        ?>
+
                     </div>
                 </div>
             </li>

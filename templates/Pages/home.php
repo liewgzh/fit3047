@@ -81,7 +81,7 @@ endif;
         <li><a href="#" data-content="counselor">Counsellor</a></li>
         <li><a href="#" data-content="about">About</a></li>
         <li><a href="#" data-content="seminar">Seminar</a></li>
-        <li><a href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'add']) ?>" class="book-button">Book Appointment</a></li>
+        <li><a href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'guestadd']) ?>" class="book-button">Guest Appointment Book</a></li>
     </ul>
 </nav>
 
