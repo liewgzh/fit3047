@@ -20,7 +20,8 @@ class UserPolicy
      */
     public function canAdd(IdentityInterface $user, User $resource)
     {
-        return true;
+        $isStaff = $user->role === 'Admin';
+        return  $isStaff;
     }
 
     /**

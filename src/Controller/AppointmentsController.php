@@ -98,7 +98,14 @@ class AppointmentsController extends AppController
     public function edit($id = null)
     {
         $appointment = $this->Appointments->get($id, contain: []);
-        $this->Authorization->authorize($appointment);
+        try {
+            $this->Authorization->authorize($appointment);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to add this user.'));
+            return $this->redirect([
+                'controller' => 'Pages',
+                'action' => 'display']);
+        }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());
@@ -126,7 +133,14 @@ class AppointmentsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $appointment = $this->Appointments->get($id);
-        $this->Authorization->authorize($appointment);
+        try {
+            $this->Authorization->authorize($appointment);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to add this user.'));
+            return $this->redirect([
+                'controller' => 'Pages',
+                'action' => 'display']);
+        }
 
         if ($this->Appointments->delete($appointment)) {
             $this->Flash->success(__('The appointment has been deleted.'));

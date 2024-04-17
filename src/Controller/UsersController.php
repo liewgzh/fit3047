@@ -34,7 +34,6 @@ class UsersController extends AppController
     if ($result && $result->isValid()) {
         // redirect to /articles after login success
         $redirect = $this->request->getQuery('redirect', [
-            
             'action' => 'view',
         ]);
         return $this->redirect($redirect);
@@ -105,8 +104,17 @@ class UsersController extends AppController
      */
     public function add()
     {   
-        $this->Authorization->skipAuthorization();
+        
         $user = $this->Users->newEmptyEntity();
+        try {
+            $this->Authorization->authorize($user);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to add this user.'));
+            return $this->redirect([
+                'controller' => 'Pages',
+                'action' => 'display']);
+        }
+
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
@@ -118,6 +126,27 @@ class UsersController extends AppController
         }
         $this->set(compact('user'));
     }
+
+    public function useradd()
+    {   
+        $this->Authorization->skipAuthorization();
+        
+
+        $user = $this->Users->newEmptyEntity();
+        $user->role="Client";
+
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The user has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $this->set(compact('user'));
+    }
+
 
     /**
      * Edit method
@@ -131,7 +160,15 @@ class UsersController extends AppController
         
 
         $user = $this->Users->get($id, contain: []);
-        $this->Authorization->authorize($user);
+        try {
+            $this->Authorization->authorize($user);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to add this user.'));
+            return $this->redirect([
+                'controller' => 'Pages',
+                'action' => 'display']);
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
@@ -157,7 +194,15 @@ class UsersController extends AppController
         
 
         $user = $this->Users->get($id);
-        $this->Authorization->authorize($user);
+        try {
+            $this->Authorization->authorize($user);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to add this user.'));
+            return $this->redirect([
+                'controller' => 'Pages',
+                'action' => 'display']);
+        }
+
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {
