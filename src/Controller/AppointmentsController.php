@@ -18,10 +18,12 @@ class AppointmentsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
-    {
+    {    $this->Authorization->skipAuthorization();
+
         $query = $this->Appointments->find()
             ->contain(['Clients', 'Counsellors', 'Services']);
         $appointments = $this->Appointments->find()->contain(['Clients', 'Counsellors', 'Services']);
+
 
         $this->set(compact('appointments'));
     }
@@ -34,8 +36,11 @@ class AppointmentsController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
-    {
+    {   
+         $this->Authorization->skipAuthorization();
+
         $appointment = $this->Appointments->get($id, contain: ['Clients', 'Counsellors', 'Services']);
+
         $this->set(compact('appointment'));
     }
 
@@ -46,6 +51,8 @@ class AppointmentsController extends AppController
      */
     public function add()//appointment/add
     {
+        $this->Authorization->skipAuthorization();
+
         $appointment = $this->Appointments->newEmptyEntity();
         if ($this->request->is('post')) {
             $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());
@@ -84,6 +91,8 @@ class AppointmentsController extends AppController
     public function edit($id = null)
     {
         $appointment = $this->Appointments->get($id, contain: []);
+        $this->Authorization->authorize($appointment);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());
             if ($this->Appointments->save($appointment)) {
@@ -110,6 +119,8 @@ class AppointmentsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $appointment = $this->Appointments->get($id);
+        $this->Authorization->authorize($appointment);
+
         if ($this->Appointments->delete($appointment)) {
             $this->Flash->success(__('The appointment has been deleted.'));
         } else {
@@ -119,7 +130,8 @@ class AppointmentsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     public function guestadd()//appointment/add
-    {
+    {   
+        $this->Authorization->skipAuthorization();
         $appointment = $this->Appointments->newEmptyEntity();
         if ($this->request->is('post')) {
             $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());

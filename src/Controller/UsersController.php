@@ -15,14 +15,63 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
-        $query = $this->Users->find();
-        $users = $this->Users->find();
+    parent::beforeFilter($event);
+    // Configure the login action to not require authentication, preventing
+    // the infinite redirect loop issue
+    $this->Authentication->addUnauthenticatedActions(['login', 'add']);
+    
 
-        $this->set(compact('users'));
+}
+
+    public function login()
+    {
+    $this->Authorization->skipAuthorization();
+    $this->request->allowMethod(['get', 'post']);
+    $result = $this->Authentication->getResult();
+    // regardless of POST or GET, redirect if user is logged in
+    if ($result && $result->isValid()) {
+        // redirect to /articles after login success
+        $redirect = $this->request->getQuery('redirect', [
+            
+            'action' => 'view',
+        ]);
+        return $this->redirect($redirect);
+    }
+    // display error if user submitted and authentication failed
+    if ($this->request->is('post') && !$result->isValid()) {
+        $this->Flash->error(__('Invalid username or password'));
+    }
     }
 
+
+
+    public function logout()
+    {
+        $this->Authorization->skipAuthorization();
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result && $result->isValid()) {
+            $this->Authentication->logout();
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
+    }
+
+    public function index()
+    {   $this->Authorization->skipAuthorization();
+        $user = $this->request->getAttribute('identity');
+
+        // Check if the user is an admin
+        if ($user->role !== 'Admin') {
+            $this->Flash->error(__('You are not authorized to access this page.'));
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
+        
+
+        $users = $this->Users->find();
+        $this->set(compact('users'));
+    }
     /**
      * View method
      *
@@ -33,10 +82,19 @@ class UsersController extends AppController
     public function view($id = null)
     {
         // Correcting the 'contain' array based on your model associations
-        $user = $this->Users->get($id, [
+        $userId = $this->request->getAttribute('identity')->getIdentifier();
+
+        $user = $this->Users->get($userId, [
             'contain' => ['ClientAppointments', 'CounsellorAppointments']
         ]);
+        $this->Authorization->authorize($user);
+
+        
+
         $this->set(compact('user'));
+        $this->Authorization->authorize($user);
+
+
     }
 
 
@@ -46,7 +104,8 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {
+    {   
+        $this->Authorization->skipAuthorization();
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -68,8 +127,11 @@ class UsersController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
-    {
+    {    
+        
+
         $user = $this->Users->get($id, contain: []);
+        $this->Authorization->authorize($user);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
@@ -92,13 +154,18 @@ class UsersController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+        
+
         $user = $this->Users->get($id);
+        $this->Authorization->authorize($user);
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect([
+            'controller' => 'Pages',
+            'action' => 'index']);
     }
 }

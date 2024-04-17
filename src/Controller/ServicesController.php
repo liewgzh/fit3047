@@ -16,7 +16,8 @@ class ServicesController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
-    {
+    {   $this->Authorization->skipAuthorization();
+
         $query = $this->Services->find();
         $services = $this->Services->find();
 
@@ -31,7 +32,8 @@ class ServicesController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
-    {
+    {   $this->Authorization->skipAuthorization();
+
         $service = $this->Services->get($id, contain: ['Appointments']);
         $this->set(compact('service'));
     }
@@ -42,8 +44,17 @@ class ServicesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {
+    {    
+
         $service = $this->Services->newEmptyEntity();
+        try {
+            $this->Authorization->authorize($service);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to add this service.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+
         if ($this->request->is('post')) {
             $service = $this->Services->patchEntity($service, $this->request->getData());
             if ($this->Services->save($service)) {
@@ -66,6 +77,14 @@ class ServicesController extends AppController
     public function edit($id = null)
     {
         $service = $this->Services->get($id, contain: []);
+        try {
+            $this->Authorization->authorize($service);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to delete this service.'));
+            return $this->redirect(['action' => 'index']);
+        }
+    
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $service = $this->Services->patchEntity($service, $this->request->getData());
             if ($this->Services->save($service)) {
@@ -87,8 +106,16 @@ class ServicesController extends AppController
      */
     public function delete($id = null)
     {
+
         $this->request->allowMethod(['post', 'delete']);
         $service = $this->Services->get($id);
+        try {
+            $this->Authorization->authorize($service);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to edit this service.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->Services->delete($service)) {
             $this->Flash->success(__('The service has been deleted.'));
         } else {
