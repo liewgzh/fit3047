@@ -105,11 +105,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>Users</span>
+                    <span>User</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Manage Users</h6>
+                        <h6 class="collapse-header">Manage User</h6>
 
 
 
@@ -118,20 +118,20 @@
                             <?php endif; ?>
 
 
-                        
-                        
+
+
                             <?php
                         $identity = $this->request->getAttribute('identity');
                         if ($identity==null) {
-                        
-                        ?><a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'useradd']) ?>">Register New User Account</a>
+
+                        ?><a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'useradd']) ?>">Register New Account</a>
                         <?php
                         }
                         ?>
-                        
 
-                        
-                      
+
+
+
 
                         <?php
                         $identity = $this->request->getAttribute('identity');

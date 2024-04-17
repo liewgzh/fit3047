@@ -11,5 +11,5 @@
     <?= $this->Form->submit(__('Login')); ?>
     <?= $this->Form->end() ?>
 
-    <?= $this->Html->link("Register New Account", ['action' => 'add']) ?>
+    <?= $this->Html->link("Create New User (ADMIN ONLY)", ['action' => 'add']) ?>
 </div>
