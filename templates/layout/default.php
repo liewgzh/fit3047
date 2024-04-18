@@ -178,10 +178,6 @@
                         <a class="collapse-item" href="#">Item 1</a>
                         <a class="collapse-item" href="#">Item 2</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                     </div>
                 </div>
             </li>
