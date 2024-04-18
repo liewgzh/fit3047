@@ -83,9 +83,8 @@ class UsersController extends AppController
         // Correcting the 'contain' array based on your model associations
         $userId = $this->request->getAttribute('identity')->getIdentifier();
 
-        $user = $this->Users->get($userId, [
-            'contain' => ['ClientAppointments', 'CounsellorAppointments']
-        ]);
+        $user = $this->Users->get($userId, contain : ['ClientAppointments', 'CounsellorAppointments']
+        );
         $this->Authorization->authorize($user);
 
         

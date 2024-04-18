@@ -100,7 +100,7 @@ class AppointmentsController extends AppController
                 $clients[$user->id] = $user->first_name . ' ' . $user->last_name;
             } else {
                 // Otherwise, fetch all clients' data
-                $clients = $this->Appointments->Clients->find('list', ['limit' => 200])->all();
+                $clients = $this->Appointments->Clients->find('list', limit: 200)->all();
             }
 
         $counsellors = $this->Appointments->Counsellors->find('list', limit: 200)->all();

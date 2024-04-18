@@ -155,37 +155,7 @@ endif;
                             <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 1</h3>
                             <p>Short description or bio of the Seminar.</p>
-                            <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
-                            <h3>Seminar 2</h3>
-                            <p>Short description or bio of the Seminar.</p>
-                            <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
-                            <h3>Seminar 3</h3>
-                            <p>Short description or bio of the Seminar.</p>
-                            <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
-                            <h3>Seminar 4</h3>
-                            <p>Short description or bio of the Seminar.</p>
-                            <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
-                            <h3>Seminar 5</h3>
-                            <p>Short description or bio of the Seminar.</p>
-                            <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
-                        </div>
-                        <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
-                            <h3>Seminar 6</h3>
-                            <p>Short description or bio of the Seminar.</p>
-                            <?= $this->Html->link('Learn More', '/seminar', ['class' => 'button']) ?>
+                            <p>Learn More</p>
                         </div>
                     </div>
                 </section>
