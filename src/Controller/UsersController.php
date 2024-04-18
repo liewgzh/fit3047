@@ -80,18 +80,16 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        // Correcting the 'contain' array based on your model associations
-        $userId = $this->request->getAttribute('identity')->getIdentifier();
 
-        $user = $this->Users->get($userId, [
-            'contain' => ['ClientAppointments', 'CounsellorAppointments']
-        ]);
+    
+        $user = $this->Users->get($id, [
+                'contain' => ['ClientAppointments', 'CounsellorAppointments']
+            ]);
+   
+    
         $this->Authorization->authorize($user);
-
-        
-
         $this->set(compact('user'));
-        $this->Authorization->authorize($user);
+        
 
 
     }
