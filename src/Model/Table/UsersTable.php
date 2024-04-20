@@ -45,17 +45,17 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        
+
         $this->hasMany('ClientAppointments', [
             'className' => 'Appointments',
             'foreignKey' => 'client_id',
-      
+
         ]);
         $this->hasMany('CounsellorAppointments', [
             'className' => 'Appointments',
             'foreignKey' => 'counsellor_id',
-              
-        ]);	
+
+        ]);
 
     }
 
@@ -103,11 +103,14 @@ class UsersTable extends Table
             ->requirePresence('date_of_birth', 'create')
             ->notEmptyDate('date_of_birth');
 
+
         $validator
             ->scalar('phone_number')
             ->maxLength('phone_number', 25)
             ->requirePresence('phone_number', 'create')
-            ->notEmptyString('phone_number');
+            ->notEmptyString('phone_number')
+            ->numeric('phone_number', __('The phone number should only contain numbers.'));
+
 
         $validator
             ->scalar('address')

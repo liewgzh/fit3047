@@ -12,3 +12,38 @@
     background: #fff; /* White background */
     border-radius: 4px; /* Rounded corners */
 }
+.top-nav li.active a {
+    border-bottom: 3px solid blue; /* Adjust the color and thickness as needed */
+    padding-bottom: 5px; /* This adds some space between the text and the underline */
+    display: inline-block; /* This change allows the border to fit the content width */
+}
+.top-nav ul {
+    list-style-type: none; /* Remove the bullets */
+    padding: 0;
+    margin: 0;
+    display: flex; /* This will arrange your menu items horizontally */
+    justify-content: space-around; /* This will add equal spacing around your items */
+    align-items: center; /* This will vertically center your items if needed */
+}
+
+.top-nav li {
+    margin: 0; /* Adjust the margin as needed */
+}
+
+.top-nav li a {
+    padding-bottom: 5px; /* Adds space for the underline */
+    display: inline-block; /* Allows the border to fit the content */
+    text-decoration: none; /* Optional: Removes the underline from links */
+    color: inherit; /* Optional: Inherits the text color from the parent */
+}
+
+.top-nav {
+    /* Existing styles */
+    margin-bottom: 60px; /* This adds space below the navigation bar */
+    border-bottom: 2px solid blue;
+}
+
+.main {
+    padding-top: 10px; /* This adds space at the top of the main content area */
+}
+

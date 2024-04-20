@@ -145,7 +145,6 @@ $checkConnection = function (string $name) {
             <div id="seminar-content" class="content-section" style="display: none;">
                 <section class="seminars">
                     <div class="row">
-                        <!-- Counselor 1 -->
                         <div class="column">
                             <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 1</h3>
@@ -165,19 +164,43 @@ $checkConnection = function (string $name) {
 </html>
 
 <script>
+
     document.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelectorAll('.top-nav a[data-content]').forEach(link => {
-            link.addEventListener('click', function(e) {
+        const navItems = document.querySelectorAll('.top-nav li');
+        const defaultActiveContent = 'counselor'; // Set the default content to be active
+
+        function clearActiveStates() {
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+
+        function setActiveState(content) {
+            clearActiveStates();
+            const activeNavItem = document.querySelector(`.top-nav a[data-content="${content}"]`).parentElement;
+            activeNavItem.classList.add('active');
+        }
+
+        // Set the default active state
+        setActiveState(defaultActiveContent);
+
+        navItems.forEach(item => {
+            item.querySelector('a[data-content]').addEventListener('click', function(e) {
                 e.preventDefault();
                 const contentToShow = this.getAttribute('data-content');
-                // Hide all content sections
+
                 document.querySelectorAll('.content-section').forEach(section => {
                     section.style.display = 'none';
                 });
-                // Show the selected content section
+
                 document.getElementById(contentToShow + '-content').style.display = 'block';
+                setActiveState(contentToShow);
             });
         });
     });
+
+
 </script>
+
+
 

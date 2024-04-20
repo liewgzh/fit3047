@@ -165,23 +165,6 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Extras -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseExtras"
-                    aria-expanded="true" aria-controls="collapseExtras">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Extras</span>
-                </a>
-                <div id="collapseExtras" class="collapse" aria-labelledby="headingExtras" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Extras</h6>
-                        <a class="collapse-item" href="#">Item 1</a>
-                        <a class="collapse-item" href="#">Item 2</a>
-                        <div class="collapse-divider"></div>
-                    </div>
-                </div>
-            </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
