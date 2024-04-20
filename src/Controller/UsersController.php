@@ -145,14 +145,18 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
+                // Login user automatically
+                $this->Authentication->setIdentity($user);
                 $this->Flash->success(__('The user has been saved.'));
-                // Redirect to the general homepage instead of a login page to show immediate access
+
+                // Redirect to the general homepage as a logged-in user
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
     }
+
 
 
 
