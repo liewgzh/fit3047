@@ -69,7 +69,15 @@ class UserPolicy
         $isStaff = $user->role === 'Admin';
         return $isOwner || $isStaff;
     }
+    public function canChangePassword(IdentityInterface $user, User $resource)
+    {
+        $isOwner = $user->id === $resource->id;
+        $isStaff = $user->role === 'Admin';
+        return $isOwner || $isStaff;
+    }
 
+
+    
 
 
 }

@@ -36,6 +36,9 @@ class User extends Entity
         if (strlen($password) > 0) {
             return (new DefaultPasswordHasher())->hash($password);
         }
+        return $password;
+
+
     }
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -60,6 +63,8 @@ class User extends Entity
         'created' => true,
         'modified' => true,
         'client_appointments' => true,
+        'nonce' => false, // Nonce and expiry dates are to be set in Controller directly, not through patching
+        'nonce_expiry' => false,
         'counsellor_appointments' => true,
     ];
 
@@ -71,4 +76,28 @@ class User extends Entity
     protected array $_hidden = [
         'password',
     ];
+    /**
+     * Generate display field for User entity
+     *
+     * @return string Display field
+     * @see \App\Model\Entity\User::$user_full_display
+     */
+    protected function _getUserFullDisplay(): string
+    {
+        return $this->first_name . ' ' . $this->last_name . ' (' . $this->email . ')';
+    }
+
+    /**
+     * Generate Full Name of a user
+     *
+     * @return string Full Name
+     * @see \App\Model\Entity\User::$full_name
+     */
+    protected function _getFullName(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+
+
 }

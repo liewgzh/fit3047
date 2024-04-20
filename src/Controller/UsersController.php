@@ -2,6 +2,10 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use App\Model\Table\UsersTable;
+use Cake\I18n\DateTime;
+use Cake\Mailer\Mailer;
+use Cake\Utility\Security;
 
 /**
  * Users Controller
@@ -20,7 +24,7 @@ class UsersController extends AppController
     parent::beforeFilter($event);
     // Configure the login action to not require authentication, preventing
     // the infinite redirect loop issue
-    $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd','sendTestEmail']);
+    $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd','sendTestEmail','forgetPassword']);
 
 
 }
@@ -39,35 +43,51 @@ class UsersController extends AppController
 
 
     public function login()
-    {
+    {   
         $this->Authorization->skipAuthorization();
+        $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
+
+        // if user passes authentication, grant access to the system
         if ($result && $result->isValid()) {
-            // Redirect to a general page like the homepage instead of user list
-            $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Pages',
-                'action' => 'display',
-            ]);
-            return $this->redirect($redirect);
+            // set a fallback location in case user logged in without triggering 'unauthenticatedRedirect'
+            $fallbackLocation = ['controller' => 'Pages', 'action' => 'display'];
+
+            // and redirect user to the location they're trying to access
+            return $this->redirect($this->Authentication->getLoginRedirect() ?? $fallbackLocation);
         }
+
+        // display error if user submitted their credentials but authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error(__('Invalid username or password'));
+            $this->Flash->error('Email address and/or Password is incorrect. Please try again. ');
         }
     }
 
 
 
 
+
+
+        /**
+     * Logout method
+     *
+     * @return \Cake\Http\Response|null|void
+     */
     public function logout()
     {
         $this->Authorization->skipAuthorization();
+        // We only need to log out a user when they're logged in
         $result = $this->Authentication->getResult();
-        // regardless of POST or GET, redirect if user is logged in
         if ($result && $result->isValid()) {
             $this->Authentication->logout();
-            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+
+            $this->Flash->success('You have been logged out successfully. ');
         }
+
+        // Otherwise just send them to the login page
+        return $this->redirect(['controller' => 'Users', 'action' => 'login']);
     }
+
 
     public function index()
     {
@@ -227,21 +247,146 @@ class UsersController extends AppController
             'controller' => 'Pages',
             'action' => 'index']);
     }
+        /**
+     * Change Password method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function changePassword(?string $id = null)
+    {
+        $user = $this->Users->get($id, ['contain' => []]);
+        try {
+            $this->Authorization->authorize($user);
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__('You are not allowed to add this user.'));
+            return $this->redirect([
+                'controller' => 'Pages',
+                'action' => 'display']);
+        }
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            // Used a different validation set in Model/Table file to ensure both fields are filled
+            $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'resetPassword']);
+            if ($this->Users->save($user)) {
+                $this->Flash->success('The user has been saved.');
 
-
+                return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+            }
+            $this->Flash->error('The user could not be saved. Please, try again.');
+        }
+        $this->set(compact('user'));
+    }
 
     
-public function sendTestEmail()
-{
-    $this->Authorization->skipAuthorization();
+    
 
-    $mailer = new Mailer('default');
-    $mailer->setFrom(['admin@team007.u24s1007.monash-ie.me' => 'Test App'])
-           ->setTo('dssa0001@student.monash.edu')  // Ensure using Monash domain or similar approved domains
-           ->setSubject('Test Email from CakePHP')
-           ->deliver('This is a test email from your CakePHP application using local SMTP.');
 
-    $this->Flash->success('Test email has been sent.');
-    return $this->redirect(['action' => 'index']);
-}
+
+    /**
+     * Forget Password method
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful email send, renders view otherwise.
+     */
+    public function forgetPassword()
+    {
+        $this->Authorization->skipAuthorization();
+        if ($this->request->is('post')) {
+            // Retrieve the user entity by provided email address
+            $user = $this->Users->findByEmail($this->request->getData('email'))->first();
+            if ($user) {
+                // Set nonce and expiry date
+                $user->nonce = Security::randomString(128);
+                $user->nonce_expiry = new DateTime('7 days');
+                if ($this->Users->save($user)) {
+                    // Now let's send the password reset email
+                    $mailer = new Mailer('default');
+
+                    // email basic config
+                    $mailer
+                        ->setEmailFormat('both')
+                        ->setTo($user->email)
+                        ->setSubject('Reset your account password');
+
+                    // select email template
+                    $mailer
+                        ->viewBuilder()
+                        ->setTemplate('reset_password');
+
+                    // transfer required view variables to email template
+                    $mailer
+                        ->setViewVars([
+                            'first_name' => $user->first_name,
+                            'last_name' => $user->last_name,
+                            'nonce' => $user->nonce,
+                            'email' => $user->email,
+                        ]);
+
+                    //Send email
+                    if (!$mailer->deliver()) {
+                        // Just in case something goes wrong when sending emails
+                        $this->Flash->error('We have encountered an issue when sending you emails. Please try again. ');
+
+                        return $this->render(); // Skip the rest of the controller and render the view
+                    }
+                } else {
+                    // Just in case something goes wrong when saving nonce and expiry
+                    $this->Flash->error('We are having issue to reset your password. Please try again. ');
+
+                    return $this->render(); // Skip the rest of the controller and render the view
+                }
+            }
+
+            /*
+             * **This is a bit of a special design**
+             * We don't tell the user if their account exists, or if the email has been sent,
+             * because it may be used by someone with malicious intent. We only need to tell
+             * the user that they'll get an email.
+             */
+            $this->Flash->success('Please check your inbox (or spam folder) for an email regarding how to reset your account password. ');
+
+            return $this->redirect(['action' => 'login']);
+        }
+    }
+
+       /**
+     * Reset Password method
+     *
+     * @param string|null $nonce Reset password nonce
+     * @return \Cake\Http\Response|null|void Redirects on successful password reset, renders view otherwise.
+     */
+    public function resetPassword(?string $nonce = null)
+    {
+        $user = $this->Users->findByNonce($nonce)->first();
+
+        // If nonce cannot find the user, or nonce is expired, prompt for re-reset password
+        if (!$user || $user->nonce_expiry < DateTime::now()) {
+            $this->Flash->error('Your link is invalid or expired. Please try again.');
+
+            return $this->redirect(['action' => 'forgetPassword']);
+        }
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            // Used a different validation set in Model/Table file to ensure both fields are filled
+            $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'resetPassword']);
+
+            // Also clear the nonce-related fields on successful password resets.
+            // This ensures that the reset link can't be used a second time.
+            $user->nonce = null;
+            $user->nonce_expiry = null;
+
+            if ($this->Users->save($user)) {
+                $this->Flash->success('Your password has been successfully reset. Please login with new password. ');
+
+                return $this->redirect(['action' => 'login']);
+            }
+            $this->Flash->error('The password cannot be reset. Please try again.');
+        }
+
+        $this->set(compact('user'));
+    }
+
+
+
+
 }
