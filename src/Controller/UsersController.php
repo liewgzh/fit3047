@@ -20,10 +20,12 @@ class UsersController extends AppController
     parent::beforeFilter($event);
     // Configure the login action to not require authentication, preventing
     // the infinite redirect loop issue
-    $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd']);
+    $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd','sendTestEmail']);
 
 
 }
+
+
 
     public function viewcounsellor($id = null)
     {
@@ -225,4 +227,21 @@ class UsersController extends AppController
             'controller' => 'Pages',
             'action' => 'index']);
     }
+
+
+
+    
+public function sendTestEmail()
+{
+    $this->Authorization->skipAuthorization();
+
+    $mailer = new Mailer('default');
+    $mailer->setFrom(['admin@team007.u24s1007.monash-ie.me' => 'Test App'])
+           ->setTo('dssa0001@student.monash.edu')  // Ensure using Monash domain or similar approved domains
+           ->setSubject('Test Email from CakePHP')
+           ->deliver('This is a test email from your CakePHP application using local SMTP.');
+
+    $this->Flash->success('Test email has been sent.');
+    return $this->redirect(['action' => 'index']);
+}
 }
