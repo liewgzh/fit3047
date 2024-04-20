@@ -79,20 +79,20 @@ class AppointmentsController extends AppController
             // Check if the appointment date is in the past
             $currentTime = new \DateTime();
             if ($startDateTime < $currentTime) {
-                $this->Flash->error(__('Cannot add appointments in the past.'));
+                $this->Flash->set('Cannot add appointments in the past.');
             } else {
                 $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
                 $appointment->end_time = $endTime->format('H:i:s');
                 $appointment->appointment_status="Scheduled";
 
                 if ($this->Appointments->Conflicts($appointment)) {
-                    $this->Flash->error(__('This appointment time is already booked. Please choose a different time.'));
+                    $this->Flash->set('This appointment time is already booked. Please choose a different time.');
                 } else {
                     if ($this->Appointments->save($appointment)) {
                         $this->Flash->success(__('The appointment has been saved.'));
                         return $this->redirect(['action' => 'index']);
                     }
-                    $this->Flash->error(__('The appointment could not be saved. Please, try again.'));
+                    $this->Flash->set('The appointment could not be saved. Please, try again.');
                 }
             }
         }
@@ -126,7 +126,7 @@ class AppointmentsController extends AppController
         try {
             $this->Authorization->authorize($appointment);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->error(__('You are not allowed to add this user.'));
+            $this->Flash->set('You are not allowed to edit this appointment.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
@@ -139,7 +139,7 @@ class AppointmentsController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The appointment could not be saved. Please, try again.'));
+            $this->Flash->set('The appointment could not be saved. Please, try again.');
         }
         $clients = $this->Appointments->Clients->find('list', limit: 200)->all();
         $counsellors = $this->Appointments->Counsellors->find('list', limit: 200)->all();
@@ -161,7 +161,7 @@ class AppointmentsController extends AppController
         try {
             $this->Authorization->authorize($appointment);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->error(__('You are not allowed to add this user.'));
+            $this->Flash->set('You are not allowed to delete this appointment.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
@@ -170,7 +170,7 @@ class AppointmentsController extends AppController
         if ($this->Appointments->delete($appointment)) {
             $this->Flash->success(__('The appointment has been deleted.'));
         } else {
-            $this->Flash->error(__('The appointment could not be deleted. Please, try again.'));
+            $this->Flash->set('The appointment could not be deleted. Please, try again.');
         }
 
         return $this->redirect(['action' => 'index']);
@@ -185,20 +185,27 @@ class AppointmentsController extends AppController
             $startDateTimeStr = $appointment->appointment_date->format('Y-m-d') . ' ' . $appointment->start_time->format('H:i:s');
             $startDateTime = new \DateTime($startDateTimeStr);
 
-            $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
-            $appointment->end_time = $endTime->format('H:i:s');
-            $appointment->appointment_status="Scheduled";
+            // Check if the appointment date is in the past
+                        $currentTime = new \DateTime();
+                        if ($startDateTime < $currentTime) {
+                            $this->Flash->set('Cannot add appointments in the past.');
+                        } else {
+
+                            $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
+                            $appointment->end_time = $endTime->format('H:i:s');
+                            $appointment->appointment_status="Scheduled";
 
 
-            if ($this->Appointments->Conflicts($appointment)) {
-                $this->Flash->error(__('This appointment time is already booked. Please choose a different time.'));
-            } else {
-                if ($this->Appointments->save($appointment)) {
-                    $this->Flash->success(__('The appointment has been saved.'));
-                    return $this->redirect(['action' => 'index']);
-                }
-                $this->Flash->error(__('The appointment could not be saved. Please, try again.'));
-            }
+                            if ($this->Appointments->Conflicts($appointment)) {
+                                $this->Flash->set('This appointment time is already booked. Please choose a different time.');
+                            } else {
+                                if ($this->Appointments->save($appointment)) {
+                                    $this->Flash->success(__('The appointment has been saved.'));
+                                    return $this->redirect(['action' => 'index']);
+                                }
+                                $this->Flash->set('The appointment could not be saved. Please, try again.');
+                            }
+                        }
         }
 
         $counsellors = $this->Appointments->Counsellors->find('list', limit: 200)->all();
