@@ -70,8 +70,12 @@
                 </blockquote>
             </div>
             <div class="related">
-                
-                <?php if ($user->role === 'Client'): ?>               
+                <?php
+                    // Check if the logged-in user is an admin
+                    $currentUser = $this->request->getAttribute('identity');
+                    if ($currentUser && $currentUser->role === 'Admin'):
+                    ?>
+                <?php if ($user->role === 'Client'): ?>
                 <h4><?= __('Related Appointments') ?></h4>
                 <div class="table-responsive">
                     <table>
@@ -118,8 +122,8 @@
                 <?php endif; ?>
             </div>
             <div class="related">
-                
-            <?php if ($user->role === 'Counsellor'): ?>   
+
+            <?php if ($user->role === 'Counsellor'): ?>
                 <h4><?= __('Related Appointments') ?></h4>
                 <div class="table-responsive">
                     <table>
@@ -162,11 +166,10 @@
                         </tr>
                         <?php endforeach; ?>
                     </table>
+                    </div>
                     <?php endif; ?>
-                </div>
-             
+                    <?php endif; ?>
             </div>
-            
         </div>
     </div>
 </div>

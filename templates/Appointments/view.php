@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <th><?= __('Counsellor') ?></th>
-                    <td><?= $appointment->hasValue('counsellor') ? $this->Html->link($appointment->counsellor->first_name, ['controller' => 'Users', 'action' => 'view', $appointment->counsellor->id]) : '' ?></td>
+                    <td><?= $appointment->hasValue('counsellor') ? $this->Html->link($appointment->counsellor->first_name, ['controller' => 'Users', 'action' => 'viewcounsellor', $appointment->counsellor->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Service') ?></th>

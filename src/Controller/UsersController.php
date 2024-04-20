@@ -49,7 +49,7 @@ class UsersController extends AppController
             return $this->redirect($redirect);
         }
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error(__('Invalid username or password'));
+            $this->Flash->set('Invalid username or password');
         }
     }
 
@@ -74,7 +74,7 @@ class UsersController extends AppController
 
         // Check if the user is an admin
         if ($user->role !== 'Admin') {
-            $this->Flash->error(__('You are not authorized to access this page.'));
+            $this->Flash->set('You are not authorized to access this page.');
             return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
 
@@ -118,7 +118,7 @@ class UsersController extends AppController
         try {
             $this->Authorization->authorize($user);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->error(__('You are not allowed to add this user.'));
+            $this->Flash->set('You are not allowed to add this user.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
@@ -127,11 +127,11 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->set('The user has been saved.');
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->set('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
     }
@@ -152,7 +152,7 @@ class UsersController extends AppController
                 // Redirect to the general homepage as a logged-in user
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->set('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
     }
@@ -175,7 +175,7 @@ class UsersController extends AppController
         try {
             $this->Authorization->authorize($user);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->error(__('You are not allowed to add this user.'));
+            $this->Flash->set('You are not allowed to edit this user.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
@@ -188,7 +188,7 @@ class UsersController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->set('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
     }
@@ -209,7 +209,7 @@ class UsersController extends AppController
         try {
             $this->Authorization->authorize($user);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->error(__('You are not allowed to add this user.'));
+            $this->Flash->set('You are not allowed to delete this user.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
@@ -218,7 +218,7 @@ class UsersController extends AppController
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->Flash->set('The user could not be deleted. Please, try again.');
         }
 
         return $this->redirect([

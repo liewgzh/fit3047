@@ -50,6 +50,11 @@
                 </blockquote>
             </div>
             <div class="related">
+                 <?php
+                    // Check if the logged-in user is an admin
+                    $currentUser = $this->request->getAttribute('identity');
+                    if ($currentUser && $currentUser->role === 'Admin'):
+                    ?>
                 <h4><?= __('Related Appointments') ?></h4>
                 <?php if (!empty($service->appointments)) : ?>
                 <div class="table-responsive">
@@ -94,6 +99,7 @@
                         <?php endforeach; ?>
                     </table>
                 </div>
+                <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>
