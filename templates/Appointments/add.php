@@ -20,7 +20,7 @@
          'min' => '09:00',
          'max' => '16:00',
          'required' => true]);
-     echo $this->Form->control('note');
+     echo $this->Form->control('note', ['maxlength' => '400']);
  ?>
   <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
 <?= $this->Form->end() ?>

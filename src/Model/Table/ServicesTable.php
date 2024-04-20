@@ -62,7 +62,7 @@ class ServicesTable extends Table
     {
         $validator
             ->scalar('service_title')
-            ->maxLength('service_title', 128)
+            ->maxLength('service_title', 30)
             ->requirePresence('service_title', 'create')
             ->notEmptyString('service_title');
 
@@ -73,11 +73,13 @@ class ServicesTable extends Table
 
         $validator
             ->integer('duration')
+            ->maxLength('duration', 3)
             ->requirePresence('duration', 'create')
             ->notEmptyString('duration');
 
         $validator
             ->decimal('price')
+            ->maxLength('price', 10, 'Price cannot exceed 10 digits')
             ->requirePresence('price', 'create')
             ->notEmptyString('price');
 

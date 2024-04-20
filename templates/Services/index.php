@@ -15,18 +15,16 @@
         <a href="<?= $this->Url->build(['action' => 'add']) ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-plus fa-sm text-white-50"></i> New Service</a>
     </div>
-    <?= $this->Html->link(__('New Service'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Services') ?></h3>
+
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th><?= h('id') ?></th>
-                    <th><?= h('service_title') ?></th>
-                    <th><?= h('duration') ?></th>
-                    <th><?= h('price') ?></th>
-                    <th><?= h('created') ?></th>
-                    <th><?= h('modified') ?></th>
+
+                    <th><?= h('Title') ?></th>
+                    <th><?= h('Duration') ?></th>
+                    <th><?= h('Price') ?></th>
+
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
@@ -34,12 +32,11 @@
                 <?php foreach ($services as $service): ?>
                 <tr>
                     <tr>
-                        <td><?= $this->Number->format($service->id) ?></td>
+
                         <td><?= h($service->service_title) ?></td>
                         <td><?= $this->Number->format($service->duration) ?></td>
                         <td><?= $this->Number->format($service->price) ?></td>
-                        <td><?= h($service->created) ?></td>
-                        <td><?= h($service->modified) ?></td>
+
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $service->id]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $service->id]) ?>
