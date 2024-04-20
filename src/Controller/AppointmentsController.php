@@ -76,19 +76,24 @@ class AppointmentsController extends AppController
             $startDateTimeStr = $appointment->appointment_date->format('Y-m-d') . ' ' . $appointment->start_time->format('H:i:s');
             $startDateTime = new \DateTime($startDateTimeStr);
 
-            $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
-            $appointment->end_time = $endTime->format('H:i:s');
-            $appointment->appointment_status="Scheduled";
-
-
-            if ($this->Appointments->Conflicts($appointment)) {
-                $this->Flash->error(__('This appointment time is already booked. Please choose a different time.'));
+            // Check if the appointment date is in the past
+            $currentTime = new \DateTime();
+            if ($startDateTime < $currentTime) {
+                $this->Flash->error(__('Cannot add appointments in the past.'));
             } else {
-                if ($this->Appointments->save($appointment)) {
-                    $this->Flash->success(__('The appointment has been saved.'));
-                    return $this->redirect(['action' => 'index']);
+                $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
+                $appointment->end_time = $endTime->format('H:i:s');
+                $appointment->appointment_status="Scheduled";
+
+                if ($this->Appointments->Conflicts($appointment)) {
+                    $this->Flash->error(__('This appointment time is already booked. Please choose a different time.'));
+                } else {
+                    if ($this->Appointments->save($appointment)) {
+                        $this->Flash->success(__('The appointment has been saved.'));
+                        return $this->redirect(['action' => 'index']);
+                    }
+                    $this->Flash->error(__('The appointment could not be saved. Please, try again.'));
                 }
-                $this->Flash->error(__('The appointment could not be saved. Please, try again.'));
             }
         }
         //$clients = $this->Appointments->Clients->find('list', limit: 200)->all();
