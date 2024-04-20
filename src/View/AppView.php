@@ -46,5 +46,8 @@ class AppView extends View
         'checkbox' => '<input type="checkbox" name="{{name}}" value="{{value}}" class="form-check-input"{{attrs}}>'
         ];
      $this->Form->setTemplates($formTemplate);
+     $this->addHelper('Authentication.Identity');
+
+
     }
 }

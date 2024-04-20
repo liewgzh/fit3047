@@ -44,6 +44,9 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('CanAuthenticate');
+
+
 
 
         $this->hasMany('ClientAppointments', [
@@ -84,11 +87,18 @@ class UsersTable extends Table
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
 
+        
         $validator
             ->scalar('password')
-            ->maxLength('password', 255)
             ->requirePresence('password', 'create')
             ->notEmptyString('password');
+
+        // Validate retyped password
+        $validator
+            ->requirePresence('password_confirm', 'create')
+            ->sameAs('password_confirm', 'password', 'Both passwords must match');
+
+
 
         $validator
             ->scalar('role')
@@ -121,6 +131,12 @@ class UsersTable extends Table
         $validator
             ->scalar('bio')
             ->allowEmptyString('bio');
+
+        $validator
+            ->uuid('nonce')
+            ->maxLength('nonce', 255)
+            ->allowEmptyString('nonce');
+
 
         return $validator;
     }
