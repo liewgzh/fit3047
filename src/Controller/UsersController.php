@@ -21,9 +21,20 @@ class UsersController extends AppController
     // Configure the login action to not require authentication, preventing
     // the infinite redirect loop issue
     $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd']);
-    
+
 
 }
+
+    public function viewcounsellor($id = null)
+    {
+        // Retrieve the counselor data including the bio
+        $this->Authorization->skipAuthorization();
+        $counselor = $this->Users->get($id, ['fields' => ['bio']]);
+
+        // Pass the counselor data to the view
+        $this->set(compact('counselor'));
+    }
+
 
     public function login()
     {
@@ -67,7 +78,7 @@ class UsersController extends AppController
             $this->Flash->error(__('You are not authorized to access this page.'));
             return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
         }
-        
+
 
         $users = $this->Users->find();
         $this->set(compact('users'));
@@ -82,15 +93,15 @@ class UsersController extends AppController
     public function view($id = null)
     {
 
-    
+
         $user = $this->Users->get($id, [
                 'contain' => ['ClientAppointments', 'CounsellorAppointments']
             ]);
-   
-    
+
+
         $this->Authorization->authorize($user);
         $this->set(compact('user'));
-        
+
 
 
     }
@@ -102,8 +113,8 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {   
-        
+    {
+
         $user = $this->Users->newEmptyEntity();
         try {
             $this->Authorization->authorize($user);
@@ -127,9 +138,9 @@ class UsersController extends AppController
     }
 
     public function useradd()
-    {   
+    {
         $this->Authorization->skipAuthorization();
-        
+
 
         $user = $this->Users->newEmptyEntity();
         $user->role="Client";
@@ -155,8 +166,8 @@ class UsersController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
-    {    
-        
+    {
+
 
         $user = $this->Users->get($id, contain: []);
         try {
@@ -190,7 +201,7 @@ class UsersController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        
+
 
         $user = $this->Users->get($id);
         try {

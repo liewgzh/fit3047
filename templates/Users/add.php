@@ -26,7 +26,7 @@
                     echo $this->Form->control('date_of_birth');
                     echo $this->Form->control('phone_number');
                     echo $this->Form->control('address');
-                    echo $this->Form->control('bio');
+                    echo $this->Form->control('bio', ['maxlength' => '400']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

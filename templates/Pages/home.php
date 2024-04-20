@@ -119,15 +119,13 @@ $checkConnection = function (string $name) {
                         foreach ($counselors as $counselor) {
                             $detailUrl = $this->Url->build(['controller' => 'Users', 'action' => 'view', $counselor->id]);
                             echo '<div class="column">';
-                            // Start of link that wraps the image and the name
-                            echo '<a href="' . h($detailUrl) . '" class="counselor-link">';
+
                             echo $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']);
                             echo '<h3>' . h($counselor->first_name . ' ' . $counselor->last_name) . '</h3>';
-                            // End of link
-                            echo '</a>';
+
                             echo '<p>' . h($counselor->bio) . '</p>';
-                            // We can also make the 'Learn More' button a link to the detail page, but it's optional since the image and name are already links
-                            echo $this->Html->link('Learn More', $detailUrl, ['class' => 'button']);
+                            // We can also make the 'Learn More' button a link to the detail page
+                            echo $this->Html->link('Learn More', ['controller' => 'Users', 'action' => 'viewcounsellor', $counselor->id], ['class' => 'button']);
                             echo '</div>';
                         }
                         ?>
@@ -150,7 +148,7 @@ $checkConnection = function (string $name) {
                             <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
                             <h3>Seminar 1</h3>
                             <p>Short description or bio of the Seminar.</p>
-                            <p>Learn More</p>
+                            <?= $this->Html->link(__('Learn More'), '#', ['class' => 'button', 'id' => 'seminar-learn-more-button']) ?>
                         </div>
                     </div>
                 </section>
