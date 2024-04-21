@@ -78,19 +78,20 @@
 
             <!-- Nav Item - Seminars Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#seminar-content" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeminars"
+                   aria-expanded="true" aria-controls="collapseSeminars">
                     <i class="fas fa-fw fa-video"></i>
                     <span>Seminars</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseSeminars" class="collapse" aria-labelledby="headingSeminars" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Seminars</h6>
-                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>#seminar-content">View All Seminars</a>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Seminars', 'action' => 'index']) ?>">View All Seminars</a>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Seminars', 'action' => 'add']) ?>">Add a Seminar</a>
                     </div>
                 </div>
             </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
