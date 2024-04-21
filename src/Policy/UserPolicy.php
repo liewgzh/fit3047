@@ -48,6 +48,14 @@ class UserPolicy
      */
     public function canDelete(IdentityInterface $user, User $resource)
     {
+
+        
+            // Prevent deleting the user with ID 1
+            if ($resource->first_name === "admin" || $resource->first_name === "Admin") {
+                return false;
+            }
+
+
         $isOwner = $user->id === $resource->id;
         $isStaff = $user->role === 'Admin';
         return $isOwner || $isStaff;
