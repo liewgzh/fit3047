@@ -37,9 +37,6 @@ class UserPolicy
             $isStaff = $user->role === 'Admin';
             return $isOwner || $isStaff;
 
-
-
-
     }
 
     /**
@@ -75,9 +72,6 @@ class UserPolicy
         $isStaff = $user->role === 'Admin';
         return $isOwner || $isStaff;
     }
-
-
-    
 
 
 }

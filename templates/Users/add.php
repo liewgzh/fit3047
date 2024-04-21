@@ -25,8 +25,29 @@
                         'type' => 'password',
                         'label' => 'Confirm Password'
                     ]);
-                    echo $this->Form->control('role');
-                    echo $this->Form->control('gender');
+                    
+                    echo $this->Form->control('role', [
+                        'type' => 'select',
+                        'options' => [
+                            'Admin' => 'Admin',
+                            'Counsellor' => 'Counsellor',
+                            'Client' => 'Client'
+                        ],
+                        'empty' => [null => 'Select Role'], 
+                        'label' => 'Role' 
+                    ]);
+
+
+                    echo $this->Form->control('gender', [
+                        'type' => 'select',
+                        'options' => [
+                            'Male' => 'Male',
+                            'Female' => 'Female',
+                            'Other' => 'Other'
+                        ],
+                        'empty' => [null => 'Select Gender'], 
+                        'label' => 'Gender'
+                    ]);
                     echo $this->Form->control('date_of_birth');
                     echo $this->Form->control('phone_number');
                     echo $this->Form->control('address');
