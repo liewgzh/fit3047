@@ -68,6 +68,9 @@ class SeminarsController extends AppController
         if ($this->request->is('post')) {
             $seminar = $this->Seminars->patchEntity($seminar, $this->request->getData());
 
+            // Set current date and time for the uploaded video
+            $seminar->upload_date = new \DateTime();
+
             // Check if there's a file and it's uploaded via HTTP POST
             if (!empty($this->request->getData('video_path')['tmp_name']) && is_uploaded_file($this->request->getData('video_path')['tmp_name'])) {
                 $file = $this->request->getData('video_path');
@@ -89,6 +92,7 @@ class SeminarsController extends AppController
         }
         $this->set(compact('seminar'));
     }
+
 
 
 
