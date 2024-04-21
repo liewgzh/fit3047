@@ -192,7 +192,10 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
+                    <?php
+                    $user = $this->request->getAttribute('identity');
+                    ?>
+                    <?php if ($user): ?>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -208,6 +211,7 @@
                                 </a>
                             </div>
                         </li>
+                    <?php endif; ?>
 
                     </ul>
 

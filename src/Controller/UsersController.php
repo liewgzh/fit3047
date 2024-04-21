@@ -53,7 +53,7 @@ class UsersController extends AppController
 
 
     public function login()
-    {   
+    {
         $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
@@ -69,7 +69,7 @@ class UsersController extends AppController
 
         // display error if user submitted their credentials but authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error('Email address and/or Password is incorrect. Please try again. ');
+            $this->Flash->set('Email address and/or Password is incorrect. Please try again. ');
         }
     }
 
@@ -191,7 +191,7 @@ class UsersController extends AppController
                 // Redirect to the general homepage as a logged-in user
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
             }
-            
+
             $this->Flash->set('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
@@ -291,13 +291,13 @@ class UsersController extends AppController
 
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
             }
-            $this->Flash->error('The user could not be saved. Please, try again.');
+            $this->Flash->set('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
     }
 
-    
-    
+
+
 
 
 
@@ -343,13 +343,13 @@ class UsersController extends AppController
                     //Send email
                     if (!$mailer->deliver()) {
                         // Just in case something goes wrong when sending emails
-                        $this->Flash->error('We have encountered an issue when sending you emails. Please try again. ');
+                        $this->Flash->set('We have encountered an issue when sending you emails. Please try again. ');
 
                         return $this->render(); // Skip the rest of the controller and render the view
                     }
                 } else {
                     // Just in case something goes wrong when saving nonce and expiry
-                    $this->Flash->error('We are having issue to reset your password. Please try again. ');
+                    $this->Flash->set('We are having issue to reset your password. Please try again. ');
 
                     return $this->render(); // Skip the rest of the controller and render the view
                 }
@@ -380,7 +380,7 @@ class UsersController extends AppController
 
         // If nonce cannot find the user, or nonce is expired, prompt for re-reset password
         if (!$user || $user->nonce_expiry < DateTime::now()) {
-            $this->Flash->error('Your link is invalid or expired. Please try again.');
+            $this->Flash->set('Your link is invalid or expired. Please try again.');
 
             return $this->redirect(['action' => 'forgetPassword']);
         }
@@ -399,7 +399,7 @@ class UsersController extends AppController
 
                 return $this->redirect(['action' => 'login']);
             }
-            $this->Flash->error('The password cannot be reset. Please try again.');
+            $this->Flash->set('The password cannot be reset. Please try again.');
         }
 
         $this->set(compact('user'));
