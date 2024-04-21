@@ -1,13 +1,4 @@
 <div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Seminar'), ['action' => 'edit', $seminar->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Seminar'), ['action' => 'delete', $seminar->id], ['confirm' => __('Are you sure you want to delete # {0}?', $seminar->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Seminars'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Seminar'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
     <div class="column column-80">
         <div class="seminars view content">
             <h3><?= h($seminar->title) ?></h3>
