@@ -24,22 +24,32 @@ class UsersController extends AppController
     parent::beforeFilter($event);
     // Configure the login action to not require authentication, preventing
     // the infinite redirect loop issue
-    $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd','sendTestEmail','forgetPassword','resetPassword']);
+    $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd','sendTestEmail','forgetPassword','resetPassword','viewcounsellor']);
 
 
 }
 
 
 
+    // public function viewcounsellor($id = null)
+    // {
+    //     // Retrieve the counselor data including the bio
+    //     $this->Authorization->skipAuthorization();
+    //     $counselor = $this->Users->get($id, ['fields' => ['bio']]);
+
+    //     // Pass the counselor data to the view
+    //     $this->set(compact('counselor'));
+    // }
+
     public function viewcounsellor($id = null)
     {
         // Retrieve the counselor data including the bio
         $this->Authorization->skipAuthorization();
-        $counselor = $this->Users->get($id, ['fields' => ['bio']]);
-
-        // Pass the counselor data to the view
-        $this->set(compact('counselor'));
+        $user = $this->Users->get($id);
+        $this->set(compact('user'));
     }
+
+
 
 
     public function login()
@@ -120,12 +130,19 @@ class UsersController extends AppController
             ]);
 
 
-        $this->Authorization->authorize($user);
+        try {
+                $this->Authorization->authorize($user);
+            } catch (\Authorization\Exception\ForbiddenException $e) {
+                $this->Flash->set('You are not allowed to add this user.');
+                return $this->redirect([
+                    'controller' => 'Pages',
+                    'action' => 'display']);
+            }
         $this->set(compact('user'));
 
-
-
     }
+
+
 
 
     /**

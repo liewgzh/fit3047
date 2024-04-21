@@ -1,14 +1,59 @@
-<!-- templates/Users/view_counsellor.php -->
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\User $user
+ */
+?>
+<div class="row">
+    <aside class="column">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Counsellor Info</title>
-</head>
-<body>
-    <h2>Counsellor Info</h2>
-    <p><?= h($counselor->bio) ?></p>
-</body>
-</html>
+    </aside>
+    <div class="column column-80">
+        <div class="users view content">
+            <h3><?= h($user->first_name) ?></h3>
+            <table>
+                <tr>
+                    <th><?= __('First Name') ?></th>
+                    <td><?= h($user->first_name) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Last Name') ?></th>
+                    <td><?= h($user->last_name) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Email') ?></th>
+                    <td><?= h($user->email) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Role') ?></th>
+                    <td><?= h($user->role) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Gender') ?></th>
+                    <td><?= h($user->gender) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Phone Number') ?></th>
+                    <td><?= h($user->phone_number) ?></td>
+                </tr>
+
+
+                <tr>
+                    <th><?= __('Date Of Birth') ?></th>
+                    <td><?= h($user->date_of_birth) ?></td>
+                </tr>
+
+            </table>
+            <div class="text">
+                <strong><?= __('Bio') ?></strong>
+                <blockquote>
+                    <?= $this->Text->autoParagraph(h($user->bio)); ?>
+                </blockquote>
+            </div>
+   
+            
+    
+            </div>
+        </div>
+    </div>
+</div>

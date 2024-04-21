@@ -13,7 +13,10 @@
                 ['action' => 'delete', $user->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']
             ) ?>
-            <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            
+            
+            <?= $this->Html->link(__('Change password'), ['action' => 'changePassword', $user->id], ['class' => 'side-nav-item']) ?>
+
         </div>
     </aside>
     <div class="column column-80">
@@ -24,8 +27,7 @@
                 <?php
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');
-                    echo $this->Form->control('email');
-                    echo $this->Form->control('password');
+                    echo $this->Form->control('email'); 
                     echo $this->Form->control('role');
                     echo $this->Form->control('gender');
                     echo $this->Form->control('date_of_birth');
