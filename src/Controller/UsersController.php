@@ -24,7 +24,7 @@ class UsersController extends AppController
     parent::beforeFilter($event);
     // Configure the login action to not require authentication, preventing
     // the infinite redirect loop issue
-    $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd','sendTestEmail','forgetPassword']);
+    $this->Authentication->addUnauthenticatedActions(['login', 'add','useradd','sendTestEmail','forgetPassword','resetPassword']);
 
 
 }
@@ -174,6 +174,7 @@ class UsersController extends AppController
                 // Redirect to the general homepage as a logged-in user
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
             }
+            
             $this->Flash->set('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
@@ -357,6 +358,7 @@ class UsersController extends AppController
      */
     public function resetPassword(?string $nonce = null)
     {
+        $this->Authorization->skipAuthorization();
         $user = $this->Users->findByNonce($nonce)->first();
 
         // If nonce cannot find the user, or nonce is expired, prompt for re-reset password
