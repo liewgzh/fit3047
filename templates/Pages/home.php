@@ -73,13 +73,12 @@ $checkConnection = function (string $name) {
 <html>
 <nav class="top-nav">
     <ul>
-        <li><a href="#" data-content="counselor">Counsellor</a></li>
+        <li><a href="#" data-content="counselor">Counsellors</a></li>
         <li><a href="#" data-content="about">About</a></li>
-        <li><a href="#" data-content="seminar">Seminar</a></li>
-        <li><a href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'guestadd']) ?>" class="book-button">Guest Appointment Book</a></li>
+        <li><a href="#" data-content="seminar">Seminars</a></li>
+        <li><a href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'guestadd']) ?>" class="book-button">Guest Appointment Booking</a></li>
     </ul>
 </nav>
-
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,9 +101,6 @@ $checkConnection = function (string $name) {
 <body>
     <header>
         <div class="container text-center">
-<!--            <a href="https://cakephp.org/" target="_blank" rel="noopener">-->
-<!--                <img alt="CakePHP" src="https://cakephp.org/v2/img/logos/CakePHP_Logo.svg" width="350" />-->
-<!--            </a>-->
             <h2>
                 Calm Wellness Center
             </h2>
@@ -120,7 +116,7 @@ $checkConnection = function (string $name) {
                             $detailUrl = $this->Url->build(['controller' => 'Users', 'action' => 'view', $counselor->id]);
                             echo '<div class="column">';
 
-                            echo $this->Html->image('nice_to_meet_u.jpg', ['alt' => 'Counselor image', 'class' => 'smaller-image']);
+                            echo $this->Html->image('usericon.png', ['alt' => 'Counselor image', 'class' => 'smaller-image']);
                             echo '<h3>' . h($counselor->first_name . ' ' . $counselor->last_name) . '</h3>';
 
                             echo '<p>' . h($counselor->bio) . '</p>';
@@ -152,12 +148,8 @@ $checkConnection = function (string $name) {
                     </div>
                 </section>
             </div>
-
-
         </div>
     </main>
-
-
 </body>
 </html>
 

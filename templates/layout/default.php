@@ -168,6 +168,30 @@
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
+            <?php if ($this->request->getAttribute('identity')) : ?>
+            <?php
+            $identity = $this->request->getAttribute('identity');
+            if ($identity->role == 'Admin') :
+            ?>
+             <li class="nav-item">
+                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConfigure"
+                     aria-expanded="true" aria-controls="collapseConfigure">
+                     <i class="fas fa-fw fa-cog"></i>
+                     <span>Configure</span>
+                 </a>
+                 <div id="collapseConfigure" class="collapse" aria-labelledby="headingConfigure" data-parent="#accordionSidebar">
+                     <div class="bg-white py-2 collapse-inner rounded">
+                         <h6 class="collapse-header">Configure</h6>
+
+                         <?= $this->Html->link('Content Blocks', ['plugin' => 'ContentBlocks', 'controller' => 'ContentBlocks', 'action' => 'index']) ?>
+                     </div>
+                 </div>
+             </li>
+             <?php endif; ?>
+            <?php endif; ?>
+
+
+
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>

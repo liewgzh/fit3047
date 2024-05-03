@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f643ec8d984bcb3f349a6672754f882",
+    "content-hash": "88a66efc2da5aa5ec279637b83e8d13d",
     "packages": [
         {
             "name": "cakephp/authentication",
@@ -499,6 +499,67 @@
                 }
             ],
             "time": "2024-03-15T14:00:32+00:00"
+        },
+        {
+            "name": "ezyang/htmlpurifier",
+            "version": "v4.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezyang/htmlpurifier.git",
+                "reference": "bbc513d79acf6691fa9cf10f192c90dd2957f18c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/bbc513d79acf6691fa9cf10f192c90dd2957f18c",
+                "reference": "bbc513d79acf6691fa9cf10f192c90dd2957f18c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.6.0 || ~7.0.0 || ~7.1.0 || ~7.2.0 || ~7.3.0 || ~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
+            },
+            "require-dev": {
+                "cerdic/css-tidy": "^1.7 || ^2.0",
+                "simpletest/simpletest": "dev-master"
+            },
+            "suggest": {
+                "cerdic/css-tidy": "If you want to use the filter 'Filter.ExtractStyleBlocks'.",
+                "ext-bcmath": "Used for unit conversion and imagecrash protection",
+                "ext-iconv": "Converts text to and from non-UTF-8 encodings",
+                "ext-tidy": "Used for pretty-printing HTML"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "library/HTMLPurifier.composer.php"
+                ],
+                "psr-0": {
+                    "HTMLPurifier": "library/"
+                },
+                "exclude-from-classmap": [
+                    "/library/HTMLPurifier/Language/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Edward Z. Yang",
+                    "email": "admin@htmlpurifier.org",
+                    "homepage": "http://ezyang.com"
+                }
+            ],
+            "description": "Standards compliant HTML filter written in PHP",
+            "homepage": "http://htmlpurifier.org/",
+            "keywords": [
+                "html"
+            ],
+            "support": {
+                "issues": "https://github.com/ezyang/htmlpurifier/issues",
+                "source": "https://github.com/ezyang/htmlpurifier/tree/v4.17.0"
+            },
+            "time": "2023-11-17T15:01:25+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -2095,6 +2156,46 @@
                 }
             ],
             "time": "2024-02-01T13:16:41+00:00"
+        },
+        {
+            "name": "ugie-cake/cakephp-content-blocks",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ugie-cake/cakephp-content-blocks.git",
+                "reference": "ed8d37bffb4923c11ff62fe07a48adacdb4615a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ugie-cake/cakephp-content-blocks/zipball/ed8d37bffb4923c11ff62fe07a48adacdb4615a4",
+                "reference": "ed8d37bffb4923c11ff62fe07a48adacdb4615a4",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "5.0.*",
+                "ext-json": "*",
+                "ezyang/htmlpurifier": "^4.16",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5 || ^9.3"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "ContentBlocks\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ContentBlocks plugin for CakePHP",
+            "support": {
+                "issues": "https://github.com/ugie-cake/cakephp-content-blocks/issues",
+                "source": "https://github.com/ugie-cake/cakephp-content-blocks/tree/v1.3.0"
+            },
+            "time": "2024-03-11T00:27:02+00:00"
         }
     ],
     "packages-dev": [

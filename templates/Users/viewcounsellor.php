@@ -20,10 +20,7 @@
                     <th><?= __('Last Name') ?></th>
                     <td><?= h($user->last_name) ?></td>
                 </tr>
-                <tr>
-                    <th><?= __('Email') ?></th>
-                    <td><?= h($user->email) ?></td>
-                </tr>
+
                 <tr>
                     <th><?= __('Role') ?></th>
                     <td><?= h($user->role) ?></td>
@@ -32,16 +29,7 @@
                     <th><?= __('Gender') ?></th>
                     <td><?= h($user->gender) ?></td>
                 </tr>
-                <tr>
-                    <th><?= __('Phone Number') ?></th>
-                    <td><?= h($user->phone_number) ?></td>
-                </tr>
 
-
-                <tr>
-                    <th><?= __('Date Of Birth') ?></th>
-                    <td><?= h($user->date_of_birth) ?></td>
-                </tr>
 
             </table>
             <div class="text">
@@ -50,9 +38,9 @@
                     <?= $this->Text->autoParagraph(h($user->bio)); ?>
                 </blockquote>
             </div>
-   
-            
-    
+
+
+
             </div>
         </div>
     </div>

@@ -48,6 +48,7 @@ class AppView extends View
      $this->Form->setTemplates($formTemplate);
      $this->addHelper('Authentication.Identity');
 
-
+    // Content blocks
+    $this->loadHelper('ContentBlocks.ContentBlock');
     }
 }

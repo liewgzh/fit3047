@@ -8,12 +8,16 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
+            <div class="side-nav-item">
             <?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $service->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $service->id), 'class' => 'side-nav-item']
             ) ?>
+            </div>
+            <div class="side-nav-item">
             <?= $this->Html->link(__('List Services'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            </div>
         </div>
     </aside>
     <div class="column column-80">
