@@ -26,6 +26,11 @@
 
 </head>
 
+<?php
+// Get the current controller and action
+$currentController = $this->getRequest()->getParam('controller');
+?>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -34,10 +39,13 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
+            <!-- content block here -->
+            <?php if ($currentController !== 'ContentBlocks'): ?>
+
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= $this->Url->build('/') ?>">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <div class="sidebar-brand-icon">
+                    <?= $this->ContentBlock->image('logo', ['style' => 'max-width: 75px; max-height:50px']); ?>
                 </div>
                 <div class="sidebar-brand-text mx-3"> <sup>Calm Wellness Center</sup></div>
             </a>
@@ -197,6 +205,9 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
+        <!-- content block end here -->
+        <?php endif; ?>
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -216,6 +227,10 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                    <!-- content block here -->
+                    <?php if ($currentController !== 'ContentBlocks'): ?>
+
                     <?php
                     $user = $this->request->getAttribute('identity');
                     ?>
@@ -237,6 +252,9 @@
                         </li>
                     <?php endif; ?>
 
+                    <!-- content block end here -->
+                    <?php endif; ?>
+
                     </ul>
 
                 </nav>
@@ -256,7 +274,8 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Team007 2024</span>
+                        <?= $this->ContentBlock->text('copyright-message'); ?>
+                        <?= $this->ContentBlock->html('contact-us'); ?>
                     </div>
                 </div>
             </footer>

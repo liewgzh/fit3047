@@ -102,7 +102,11 @@ $checkConnection = function (string $name) {
     <header>
         <div class="container text-center">
             <h2>
-                Calm Wellness Center
+
+                <?= $this->ContentBlock->image('logo', ['style' => 'max-width: 150px; max-height:100px']); ?>
+                </h2>
+                <h2>
+                <?= $this->ContentBlock->text('website-title'); ?>
             </h2>
         </div>
     </header>
@@ -130,10 +134,13 @@ $checkConnection = function (string $name) {
             </div>
             <div id="about-content" class="content-section" style="display: none;">
                 <p>
+                    <?= $this->ContentBlock->html('home-content'); ?>
+                  <!--
                     Client Calm Wellness Centre focuses on conducting counselling sessions with customers,
                     mostly those with chronic fatigue syndrome, locally, within Australia.
                     The intent is to keep up with the current business climate and move from pen and paper
                     to having an online system with a website attracting customers and educating the public.
+                    -->
                 </p>
             </div>
             <div id="seminar-content" class="content-section" style="display: none;">
