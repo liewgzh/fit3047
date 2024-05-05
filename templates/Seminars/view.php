@@ -11,8 +11,7 @@
                     <th><?= __('Video') ?></th>
                     <td>
                         <video width="320" height="240" controls>
-                            <source src="<?= $this->Url->webroot('videos/' . $seminar->video_path) ?>" type="video/mp4">
-                            Your browser does not support the video tag.
+                            <source src="<?= $this->Url->webroot($seminar->video_path) ?>" type="video/mp4">
                         </video>
                     </td>
 

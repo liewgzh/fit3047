@@ -72,14 +72,13 @@ class SeminarsController extends AppController
             $seminar->upload_date = new \DateTime();
 
             // Check if there's a file and it's uploaded via HTTP POST
-            if (!empty($this->request->getData('video_path')['tmp_name']) && is_uploaded_file($this->request->getData('video_path')['tmp_name'])) {
-                $file = $this->request->getData('video_path');
-                $filePath = '/opt/homebrew/var/www/team007-app_fit3047/webroot/videos/' . $file['name'];
-                $destination = WWW_ROOT . 'videos/' . $file['name']; // For move_uploaded_file()
+            $file = $this->request->getData('video_path');
+            if (!empty($file) && is_uploaded_file($file->getStream()->getMetaData('uri'))) {
+                $filename = $file->getClientFilename();
+                $destination = '/opt/homebrew/var/www/team007-app_fit3047/webroot/videos/' . $filename; // Destination path
 
-                // Move the file to the destination path
-                if (move_uploaded_file($file['tmp_name'], $destination)) {
-                    $seminar->video_path = $filePath;
+                if (move_uploaded_file($file->getStream()->getMetaData('uri'), $destination)) {
+                    $seminar->video_path = 'videos/' . $filename; // Save relative path
                 }
             }
 
@@ -92,6 +91,8 @@ class SeminarsController extends AppController
         }
         $this->set(compact('seminar'));
     }
+
+
 
 
 
