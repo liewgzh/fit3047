@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 use DateTime;
 use DateInterval;
+use Cake\View\JsonView;
 
 /**
  * Appointments Controller
@@ -42,6 +43,25 @@ class AppointmentsController extends AppController
         $appointments = $query->all();
 
         $this->set(compact('appointments'));
+    }
+
+    public function calendar()
+        {    $this->Authorization->skipAuthorization();
+
+            $user = $this->request->getAttribute('identity');
+
+            $query = $this->Appointments->find()
+                ->contain(['Clients', 'Counsellors', 'Services']);
+            $appointments = $this->Appointments->find()->contain(['Clients', 'Counsellors', 'Services']);
+
+            $appointments = $query->all();
+
+            $this->set(compact('appointments'));
+        }
+
+    public function viewClasses(): array
+    {
+        return [JsonView::class];
     }
 
     /**

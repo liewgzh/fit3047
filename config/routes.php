@@ -62,6 +62,14 @@ return function (RouteBuilder $routes): void {
          */
         $builder->connect('/pages/*', 'Pages::display');
 
+        # routing for contentblocks go back to homepage
+         $builder->connect(
+            '/content-blocks/pages/display/home',
+            ['controller' => 'Pages', 'action' => 'display', 'home']
+        );
+
+        $builder->setExtensions(['json']);
+
         /*
          * Connect catchall routes for all controllers.
          *

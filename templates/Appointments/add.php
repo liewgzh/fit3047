@@ -8,6 +8,9 @@
  */
 ?>
 <h1 class="h3 mb-2 text-gray-800">Add New Appointment</h1>
+<div class="side-nav-item">
+                    <?= $this->Html->link(__('Check Availability'), ['action' => 'calendar'], ['class' => 'side-nav-item']) ?>
+                    </div>
 <?= $this->Form->create($appointment) ?>
  <?php
      echo $this->Form->control('client_id', ['options' => $clients, 'required' => true, 'empty' => true]);

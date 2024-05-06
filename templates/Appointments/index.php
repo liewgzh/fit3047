@@ -13,6 +13,9 @@
         <a href="<?= $this->Url->build(['action' => 'add']) ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-plus fa-sm text-white-50"></i> New Appointment</a>
     </div>
+    <div class="side-nav-item">
+                        <?= $this->Html->link(__('Check Availability'), ['action' => 'calendar'], ['class' => 'side-nav-item']) ?>
+                        </div>
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
