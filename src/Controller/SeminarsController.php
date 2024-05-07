@@ -110,6 +110,13 @@ class SeminarsController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
+        $user = $this->request->getAttribute('identity');
+
+        // Only allow admins to add seminars
+        if ($user->role !== 'Admin') {
+            $this->Flash->error(__('You are not authorized to edit seminars.'));
+            return $this->redirect(['action' => 'index']);
+        }
 
         $seminar = $this->Seminars->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -136,6 +143,13 @@ class SeminarsController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
+        $user = $this->request->getAttribute('identity');
+
+        // Only allow admins to add seminars
+        if ($user->role !== 'Admin') {
+            $this->Flash->error(__('You are not authorized to delete seminars.'));
+            return $this->redirect(['action' => 'index']);
+        }
 
         $this->request->allowMethod(['post', 'delete']);
         $seminar = $this->Seminars->get($id);
