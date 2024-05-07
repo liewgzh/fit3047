@@ -19,7 +19,8 @@ class AppointmentsController extends AppController
     parent::beforeFilter($event);
     // Configure the login action to not require authentication, preventing
     // the infinite redirect loop issue
-    $this->Authentication->addUnauthenticatedActions(['guestadd']);}
+    $this->Authentication->addUnauthenticatedActions(['guestadd']);
+    $this->Authentication->addUnauthenticatedActions(['calendar']);}
     /**
      * Index method
      *

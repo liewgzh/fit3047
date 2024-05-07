@@ -47,7 +47,7 @@ $currentController = $this->getRequest()->getParam('controller');
                 <div class="sidebar-brand-icon">
                     <?= $this->ContentBlock->image('logo', ['style' => 'max-width: 50px; max-height:38px']); ?>
                 </div>
-                <div class="sidebar-brand-text mx-3"> <sup>Calm Wellness Center</sup></div>
+
             </a>
 
             <!-- Divider -->
