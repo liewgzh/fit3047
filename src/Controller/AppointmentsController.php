@@ -104,6 +104,7 @@ class AppointmentsController extends AppController
                 $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
                 $appointment->end_time = $endTime->format('H:i:s');
                 $appointment->appointment_status="Scheduled";
+                $appointment->payment_status="Unpaid";
 
                 if ($this->Appointments->Conflicts($appointment)) {
                     $this->Flash->set('This appointment time is already booked. Please choose a different time.');
@@ -152,11 +153,18 @@ class AppointmentsController extends AppController
                 'action' => 'display']);
         }
 
+        // Check the role of the logged-in user
+        $user = $this->request->getAttribute('identity');
+
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());
+            // If the user is a counsellor or a client, prevent them from modifying the payment_status field
+            if ($user->role === 'Client' || $user->role === 'Counsellor') {
+                $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData(), ['accessibleFields' => ['payment_status' => false]]);
+            } else {
+                $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());
+            }
             if ($this->Appointments->save($appointment)) {
                 $this->Flash->success(__('The appointment has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->set('The appointment could not be saved. Please, try again.');

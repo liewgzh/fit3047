@@ -8,7 +8,6 @@
 <div class="appointments index content">
         <h1 class="h3 mb-0 text-gray-800"><?= __('Calendar') ?></h1>
         <div id='calendar'></div>
-    </div>
     <script>
         $(document).ready(function() {
             const calendarEl = document.getElementById('calendar')

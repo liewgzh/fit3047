@@ -49,7 +49,7 @@ class AppointmentsTable extends Table
 
         $this->belongsTo('Services', [
             'foreignKey' => 'service_id',
-           
+
         ]);
 
         $this->belongsTo('Clients', [
@@ -67,7 +67,7 @@ class AppointmentsTable extends Table
     }
     public function Conflicts($appointment)
     {
-   
+
     $conflicts = $this->find()
         ->where([
             'OR' => [
@@ -88,11 +88,11 @@ class AppointmentsTable extends Table
 
             ],
             'counsellor_id' => $appointment->counsellor_id,
-            
+
         ])
         ->count();
 
-    return $conflicts > 0; 
+    return $conflicts > 0;
 }
 
     /**
@@ -143,6 +143,10 @@ class AppointmentsTable extends Table
         $validator
             ->scalar('appointment_status')
             ->allowEmptyString('appointment_status');
+
+        $validator
+            ->scalar('payment_status')
+            ->allowEmptyString('payment_status');
 
         $validator
             ->scalar('note')
