@@ -10,7 +10,13 @@ echo $this->Html->script('/vendor/datatables/dataTables.bootstrap4.min.js', ['bl
 <div class="seminars index content">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= __('Seminars') ?></h1>
+        <?php
+            // Check if the logged-in user is an admin
+            $currentUser = $this->request->getAttribute('identity');
+            if ($currentUser && $currentUser->role === 'Admin'):
+            ?>
         <?= $this->Html->link(__('New Seminar'), ['action' => 'add'], ['class' => 'd-none d-sm-inline-block btn btn-sm btn-primary shadow-sm']) ?>
+        <?php endif; ?>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -32,8 +38,14 @@ echo $this->Html->script('/vendor/datatables/dataTables.bootstrap4.min.js', ['bl
                     <td><?= h($seminar->modified) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $seminar->id], ['class' => 'btn btn-primary']) ?>
+                        <?php
+                        // Check if the logged-in user is an admin
+                        $currentUser = $this->request->getAttribute('identity');
+                        if ($currentUser && $currentUser->role === 'Admin'):
+                        ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $seminar->id], ['class' => 'btn btn-primary']) ?>
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $seminar->id], ['confirm' => __('Are you sure you want to delete # {0}?', $seminar->id), 'class' => 'btn btn-danger']) ?>
+                       <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

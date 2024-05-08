@@ -95,7 +95,13 @@ $currentController = $this->getRequest()->getParam('controller');
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Seminars</h6>
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Seminars', 'action' => 'index']) ?>">View All Seminars</a>
-                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Seminars', 'action' => 'add']) ?>">Add a Seminar</a>
+                        <?php
+                        // Check if the logged-in user is an admin
+                        $currentUser = $this->request->getAttribute('identity');
+                        if ($currentUser && $currentUser->role === 'Admin'):
+                        ?>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Seminars', 'action' => 'add']) ?>">Add New Seminar</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>
@@ -120,14 +126,9 @@ $currentController = $this->getRequest()->getParam('controller');
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage User</h6>
 
-
-
                         <?php if (!$this->request->getAttribute('identity')) : ?>
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login']) ?>">Login</a>
                             <?php endif; ?>
-
-
-
 
                             <?php
                         $identity = $this->request->getAttribute('identity');
@@ -137,10 +138,6 @@ $currentController = $this->getRequest()->getParam('controller');
                         <?php
                         }
                         ?>
-
-
-
-
 
                         <?php
                         $identity = $this->request->getAttribute('identity');
@@ -152,8 +149,13 @@ $currentController = $this->getRequest()->getParam('controller');
                         <?php
                         }
                         ?>
+                        <?php
+                        // Check if the logged-in user is an admin
+                        $currentUser = $this->request->getAttribute('identity');
+                        if ($currentUser && $currentUser->role === 'Admin'):
+                        ?>
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>">View All Users</a>
-
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>
@@ -169,7 +171,13 @@ $currentController = $this->getRequest()->getParam('controller');
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Services</h6>
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Services', 'action' => 'index']) ?>">View All Services</a>
+                        <?php
+                        // Check if the logged-in user is an admin
+                        $currentUser = $this->request->getAttribute('identity');
+                        if ($currentUser && $currentUser->role === 'Admin'):
+                        ?>
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Services', 'action' => 'add']) ?>">Add New Service</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>
@@ -214,7 +222,7 @@ $currentController = $this->getRequest()->getParam('controller');
 
          <!-- Nav Item - Dashboard -->
          <li class="nav-item active">
-             <a class="nav-link" href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>">
+             <a class="nav-link" href="<?= $this->Url->build('/') ?>">
                  <i class="fas fa-fw fa-house-user"></i>
                  <span>Back to Homepage</span></a>
          </li>

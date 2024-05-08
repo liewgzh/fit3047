@@ -17,12 +17,18 @@
             <div class="side-nav-item">
                 <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
             </div>
+            <?php
+            // Check if the logged-in user is an admin
+            $currentUser = $this->request->getAttribute('identity');
+            if ($currentUser && $currentUser->role === 'Admin'):
+            ?>
             <div class="side-nav-item">
                 <?= $this->Html->link(__('List Users'), ['action' => 'index']) ?>
             </div>
             <div class="side-nav-item">
                 <?= $this->Html->link(__('New User'), ['action' => 'add']) ?>
             </div>
+            <?php endif; ?>
         </div>
     </aside>
     <div class="column column-80">

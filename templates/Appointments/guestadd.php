@@ -6,34 +6,27 @@
  * @var \Cake\Collection\CollectionInterface|string[] $services
  */
 ?>
-<div class="row">
-    <div class="column column-80">
-        <div class="appointments form content">
-            <?= $this->Form->create($appointment) ?>
-            <fieldset>
-
-                <legend><?= __('Add Appointment') ?></legend>
-                <div class="side-nav-item">
-                    <?= $this->Html->link(__('Check Unavailability'), ['action' => 'calendar'], ['class' => 'side-nav-item']) ?>
-                </div>
-                <?php
-
-                    echo $this->Form->control('guest_name', ['maxlength' => '30']);
-                    echo $this->Form->control('guest_email', ['maxlength' => '30']);
-                    echo $this->Form->control('counsellor_id', ['options' => $counsellors]);
-                    echo $this->Form->control('service_id', ['options' => $services]);
-                    echo $this->Form->control('appointment_date');
-                    echo $this->Form->control('start_time', [
-                         'type' => 'time',
-                         'label' => 'Start Time (9:00 AM to 4:00 PM):',
-                         'min' => '09:00',
-                         'max' => '16:00',
-                         'required' => true]);
-                    echo $this->Form->control('note', ['maxlength' => '400']);
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
+<h1 class="h3 mb-2 text-gray-800">Guest Booking</h1>
+    <div class="side-nav-item">
+        <?= $this->Html->link(__('Check Unavailability'), ['action' => 'calendar'], ['class' => 'side-nav-item']) ?>
     </div>
-</div>
+    <?= $this->Form->create($appointment) ?>
+    <?php
+
+        echo $this->Form->control('guest_name', ['maxlength' => '30']);
+        echo $this->Form->control('guest_email', ['maxlength' => '30']);
+        echo $this->Form->control('counsellor_id', ['options' => $counsellors]);
+        echo $this->Form->control('service_id', ['options' => $services]);
+        echo $this->Form->control('appointment_date');
+        echo $this->Form->control('start_time', [
+             'type' => 'time',
+             'label' => 'Start Time (9:00 AM to 4:00 PM):',
+             'min' => '09:00',
+             'max' => '16:00',
+             'required' => true]);
+        echo $this->Form->control('note', ['maxlength' => '400']);
+    ?>
+
+<?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
+<?= $this->Form->end() ?>
+

@@ -8,10 +8,16 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
+            <?php
+            // Check if the logged-in user is an admin
+            $currentUser = $this->request->getAttribute('identity');
+            if ($currentUser && $currentUser->role === 'Admin'):
+            ?>
             <?= $this->Html->link(__('Edit Service'), ['action' => 'edit', $service->id], ['class' => 'side-nav-item']) ?>
             <?= $this->Form->postLink(__('Delete Service'), ['action' => 'delete', $service->id], ['confirm' => __('Are you sure you want to delete # {0}?', $service->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Services'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('New Service'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+            <?php endif; ?>
+            <?= $this->Html->link(__('List Services'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column column-80">
@@ -55,50 +61,48 @@
                     $currentUser = $this->request->getAttribute('identity');
                     if ($currentUser && $currentUser->role === 'Admin'):
                     ?>
-                <h4><?= __('Related Appointments') ?></h4>
                 <?php if (!empty($service->appointments)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Client Id') ?></th>
-                            <th><?= __('Guest Name') ?></th>
-                            <th><?= __('Guest Email') ?></th>
-                            <th><?= __('Counsellor Id') ?></th>
-                            <th><?= __('Service Id') ?></th>
-                            <th><?= __('Appointment Date') ?></th>
-                            <th><?= __('Start Time') ?></th>
-                            <th><?= __('End Time') ?></th>
-                            <th><?= __('Appointment Status') ?></th>
-                            <th><?= __('Note') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($service->appointments as $appointment) : ?>
-                        <tr>
-                            <td><?= h($appointment->id) ?></td>
-                            <td><?= h($appointment->client_id) ?></td>
-                            <td><?= h($appointment->guest_name) ?></td>
-                            <td><?= h($appointment->guest_email) ?></td>
-                            <td><?= h($appointment->counsellor_id) ?></td>
-                            <td><?= h($appointment->service_id) ?></td>
-                            <td><?= h($appointment->appointment_date) ?></td>
-                            <td><?= h($appointment->start_time) ?></td>
-                            <td><?= h($appointment->end_time) ?></td>
-                            <td><?= h($appointment->appointment_status) ?></td>
-                            <td><?= h($appointment->note) ?></td>
-                            <td><?= h($appointment->created) ?></td>
-                            <td><?= h($appointment->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Appointments', 'action' => 'view', $appointment->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Appointments', 'action' => 'edit', $appointment->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Appointments', 'action' => 'delete', $appointment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $appointment->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
+                <h4><?= __('Related Appointments') ?></h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th><?= __('Client ID') ?></th>
+                                    <th><?= __('Counsellor ID') ?></th>
+                                    <th><?= __('Appointment Date') ?></th>
+                                    <th><?= __('Start Time') ?></th>
+                                    <th><?= __('End Time') ?></th>
+                                    <th><?= __('Appointment Status') ?></th>
+                                    <th><?= __('Payment Status') ?></th>
+                                    <th><?= __('Note') ?></th>
+                                    <th><?= __('Guest Name') ?></th>
+                                    <th><?= __('Guest Email') ?></th>
+                                    <th class="actions"><?= __('Actions') ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($service->appointments as $appointment) : ?>
+                                    <tr>
+                                        <td><?= h($appointment->client_id) ?></td>
+                                        <td><?= h($appointment->counsellor_id) ?></td>
+                                        <td><?= h($appointment->appointment_date) ?></td>
+                                        <td><?= h($appointment->start_time) ?></td>
+                                        <td><?= h($appointment->end_time) ?></td>
+                                        <td><?= h($appointment->appointment_status) ?></td>
+                                        <td><?= h($appointment->payment_status) ?></td>
+                                        <td><?= h($appointment->note) ?></td>
+                                        <td><?= h($appointment->guest_name) ?></td>
+                                        <td><?= h($appointment->guest_email) ?></td>
+                                        <td class="actions">
+                                            <?= $this->Html->link(__('View'), ['controller' => 'Appointments', 'action' => 'view', $appointment->id]) ?>
+                                            <?= $this->Html->link(__('Edit'), ['controller' => 'Appointments', 'action' => 'edit', $appointment->id]) ?>
+                                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'Appointments', 'action' => 'delete', $appointment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $appointment->id)]) ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php endif; ?>
                 <?php endif; ?>
             </div>

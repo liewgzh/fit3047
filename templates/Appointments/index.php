@@ -55,9 +55,9 @@
                     <td><?= h($appointment->guest_name) ?></td>
                     <td><?= h($appointment->guest_email) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $appointment->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $appointment->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $appointment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $appointment->id)]) ?>
+                        <?= $this->Html->link(__('View'), ['action' => 'view', $appointment->id], ['class' => 'btn btn-primary']) ?>
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $appointment->id], ['class' => 'btn btn-primary']) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $appointment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $appointment->id), 'class' => 'btn btn-danger']) ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
