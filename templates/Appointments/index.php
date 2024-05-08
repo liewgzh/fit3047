@@ -13,6 +13,9 @@
         <a href="<?= $this->Url->build(['action' => 'add']) ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-plus fa-sm text-white-50"></i> New Appointment</a>
     </div>
+    <div class="side-nav-item">
+        <?= $this->Html->link(__('Check Unavailability'), ['action' => 'calendar'], ['class' => 'side-nav-item']) ?>
+    </div>
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
@@ -26,6 +29,7 @@
                     <th><?= h('Start Time') ?></th>
                     <th><?= h('End Time') ?></th>
                     <th><?= h('Status') ?></th>
+                    <th><?= h('Payment Status') ?></th>
                     <th><?= h('Created') ?></th>
                     <th><?= h('Modified') ?></th>
                     <th><?= h('Guest Name') ?></th>
@@ -45,6 +49,7 @@
                     <td><?= h($appointment->start_time) ?></td>
                     <td><?= h($appointment->end_time) ?></td>
                     <td><?= h($appointment->appointment_status) ?></td>
+                    <td><?= h($appointment->payment_status) ?></td>
                     <td><?= h($appointment->created) ?></td>
                     <td><?= h($appointment->modified) ?></td>
                     <td><?= h($appointment->guest_name) ?></td>

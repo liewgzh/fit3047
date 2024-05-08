@@ -47,6 +47,7 @@ class Appointment extends Entity
         'start_time' => true,
         'end_time' => true,
         'appointment_status' => true,
+        'payment_status' => true,
         'note' => true,
         'created' => true,
         'modified' => true,

@@ -19,7 +19,7 @@
                 <?php
                     echo $this->Form->control('service_title');
                     echo $this->Form->control('service_description', ['maxlength' => '200']);
-                    echo $this->Form->control('duration (in minutes)', ['maxlength' => '3']);
+                    echo $this->Form->control('duration', ['maxlength' => '3']);
                     echo $this->Form->control('price', ['maxlength' => '4']);
                 ?>
             </fieldset>

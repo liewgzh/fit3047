@@ -50,6 +50,10 @@
                     <th><?= __('Appointment Status') ?></th>
                     <td><?= h($appointment->appointment_status) ?></td>
                 </tr>
+                 <tr>
+                    <th><?= __('Payment Status') ?></th>
+                    <td><?= h($appointment->payment_status) ?></td>
+                </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
                     <td><?= $this->Number->format($appointment->id) ?></td>

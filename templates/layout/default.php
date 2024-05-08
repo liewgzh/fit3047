@@ -45,9 +45,9 @@ $currentController = $this->getRequest()->getParam('controller');
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= $this->Url->build('/') ?>">
                 <div class="sidebar-brand-icon">
-                    <?= $this->ContentBlock->image('logo', ['style' => 'max-width: 75px; max-height:50px']); ?>
+                    <?= $this->ContentBlock->image('logo', ['style' => 'max-width: 50px; max-height:38px']); ?>
                 </div>
-                <div class="sidebar-brand-text mx-3"> <sup>Calm Wellness Center</sup></div>
+
             </a>
 
             <!-- Divider -->
@@ -208,6 +208,19 @@ $currentController = $this->getRequest()->getParam('controller');
 
         <!-- content block end here -->
         <?php endif; ?>
+
+         <!-- content block here -->
+         <?php if ($currentController == 'ContentBlocks'): ?>
+
+         <!-- Nav Item - Dashboard -->
+         <li class="nav-item active">
+             <a class="nav-link" href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>">
+                 <i class="fas fa-fw fa-house-user"></i>
+                 <span>Back to Homepage</span></a>
+         </li>
+
+         <!-- content block end here -->
+         <?php endif; ?>
 
         </ul>
         <!-- End of Sidebar -->

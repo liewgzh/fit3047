@@ -13,6 +13,9 @@
             <fieldset>
 
                 <legend><?= __('Add Appointment') ?></legend>
+                <div class="side-nav-item">
+                    <?= $this->Html->link(__('Check Unavailability'), ['action' => 'calendar'], ['class' => 'side-nav-item']) ?>
+                </div>
                 <?php
 
                     echo $this->Form->control('guest_name', ['maxlength' => '30']);

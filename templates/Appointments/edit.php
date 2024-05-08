@@ -19,6 +19,11 @@
      echo $this->Form->control('start_time');
      echo $this->Form->control('end_time');
      echo $this->Form->control('appointment_status');
+     // Check if the user is not a client or counsellor before rendering the payment_status field
+     $userRole = $this->request->getAttribute('identity')->role;
+     if ($userRole !== 'Client' && $userRole !== 'Counsellor') {
+         echo $this->Form->control('payment_status');
+     }
      echo $this->Form->control('note');
  ?>
   <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>

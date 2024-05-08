@@ -72,145 +72,122 @@ $checkConnection = function (string $name) {
 
 
 ?>
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
-<nav class="top-nav">
-    <ul>
-        <li><a href="#" data-content="counselor">Counsellors</a></li>
-        <li><a href="#" data-content="about">About</a></li>
-        <li><a href="#" data-content="seminar">Seminars</a></li>
-        <li><a href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'guestadd']) ?>" class="book-button">Guest Appointment Booking</a></li>
-    </ul>
-</nav>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        Calm Wellness Center
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
+	<head>
+	<?= $this->Html->charset() ?>
+		<title><?= $this->fetch('title') ?></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="webroot/frontend/assets/css/main.css" />
 
-    <!-- I commented the below out due to sidebar font size issues
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake', 'home']) ?>
-    -->
+		<?= $this->Html->meta('icon') ?>
+		<?= $this->Html->css('styles.css') ?>
 
-    <?= $this->Html->css('styles.css') ?>
+        <?= $this->fetch('meta') ?>
+        <?= $this->fetch('css') ?>
+        <?= $this->fetch('script') ?>
+	</head>
+	<body class="is-preload">
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
-</head>
-<body>
-    <header>
-        <div class="container text-center">
-            <h2>
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-                <?= $this->ContentBlock->image('logo', ['style' => 'max-width: 150px; max-height:100px']); ?>
-                </h2>
-                <h2>
-                <?= $this->ContentBlock->text('website-title'); ?>
-            </h2>
-        </div>
-    </header>
-    <main class="main">
-        <div class="container">
-            <div id="counselor-content" class="content-section">
-                <section class="counselors">
-                    <div class="row">
-                        <?php
-                        foreach ($counselors as $counselor) {
-                            $detailUrl = $this->Url->build(['controller' => 'Users', 'action' => 'view', $counselor->id]);
-                            echo '<div class="column">';
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
 
-                            echo $this->Html->image('usericon.png', ['alt' => 'Counselor image', 'class' => 'smaller-image']);
-                            echo '<h3>' . h($counselor->first_name . ' ' . $counselor->last_name) . '</h3>';
+							<!-- Header -->
+								<header id="header">
+									<strong><?= $this->ContentBlock->image('logo', ['style' => 'max-width: 150px; max-height:100px']); ?></strong>
+								</header>
 
-                            echo '<p>' . h($counselor->bio) . '</p>';
-                            // We can also make the 'Learn More' button a link to the detail page
-                            echo $this->Html->link('Learn More', ['controller' => 'Users', 'action' => 'viewcounsellor', $counselor->id], ['class' => 'button']);
-                            echo '</div>';
-                        }
-                        ?>
-                    </div>
-                </section>
-            </div>
-            <div id="about-content" class="content-section" style="display: none;">
-                <p>
-                    <?= $this->ContentBlock->html('home-content'); ?>
-                  <!--
-                    Client Calm Wellness Centre focuses on conducting counselling sessions with customers,
-                    mostly those with chronic fatigue syndrome, locally, within Australia.
-                    The intent is to keep up with the current business climate and move from pen and paper
-                    to having an online system with a website attracting customers and educating the public.
-                    -->
-                </p>
-            </div>
-            <div id="seminar-content" class="content-section" style="display: block;"> <!-- Make this visible by default -->
-                <section class="seminars">
-                    <div class="row">
-                        <?php
-                        foreach ($seminars as $seminar) {
-                            echo '<div class="column">';
-                            echo '<div class="video-wrapper">';
-                            echo '<video width="320" height="240" controls poster="' . h($seminar->thumbnail_path) . '">';
-                            echo '<source src="' . h($seminar->video_path) . '" type="video/mp4">';
-                            echo 'Your browser does not support the video tag.';
-                            echo '</video>';
-                            echo '</div>';
-                            echo '<h3>' . h($seminar->title) . '</h3>';
-                            echo '<p>' . h($seminar->description) . '</p>';
-                            // Link to view seminar details
-                            echo $this->Html->link('Watch Full Seminar', ['controller' => 'Seminars', 'action' => 'view', $seminar->id], ['class' => 'button']);
-                            echo '</div>';
-                        }
-                        ?>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </main>
-</body>
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1><?= $this->ContentBlock->text('website-title'); ?><br />
+											</h1>
+											<p>About Us</p>
+										</header>
+										<p><?= $this->ContentBlock->html('home-content'); ?></p>
+										<ul class="actions">
+											<li><a href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'guestadd']) ?>" class="button big">Book appointment as guest</a></li>
+										</ul>
+									</div>
+									<span class="image object">
+										<img src="webroot/frontend/images/pic10.jpg" alt="" />
+									</span>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Meet our counsellors</h2>
+									</header>
+									 <div class="row">
+                                        <?php
+                                        foreach ($counselors as $counselor) {
+                                            $detailUrl = $this->Url->build(['controller' => 'Users', 'action' => 'view', $counselor->id]);
+                                            echo '<div class="column">';
+
+                                            echo $this->Html->image('usericon.png', ['alt' => 'Counselor image', 'class' => 'smaller-image']);
+                                            echo '<h3>' . h($counselor->first_name . ' ' . $counselor->last_name) . '</h3>';
+
+                                            echo '<p>' . h($counselor->bio) . '</p>';
+                                            // We can also make the 'Learn More' button a link to the detail page
+                                            echo $this->Html->link('Learn More', ['controller' => 'Users', 'action' => 'viewcounsellor', $counselor->id], ['class' => 'button']);
+                                            echo '</div>';
+                                        }
+                                        ?>
+                                    </div>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Watch our seminars</h2>
+									</header>
+									<div class="posts">
+									    <article>
+                                            <?php
+                                            foreach ($seminars as $seminar) {
+                                                echo '<div class="column">';
+                                                echo '<div class="video-wrapper">';
+                                                echo '<video width="320" height="240" controls poster="' . h($seminar->thumbnail_path) . '">';
+                                                echo '<source src="' . h($seminar->video_path) . '" type="video/mp4">';
+                                                echo 'Your browser does not support the video tag.';
+                                                echo '</video>';
+                                                echo '</div>';
+                                                echo '<h3>' . h($seminar->title) . '</h3>';
+                                                echo '<p>' . h($seminar->description) . '</p>';
+                                                // Link to view seminar details
+                                                echo $this->Html->link('Watch Full Seminar', ['controller' => 'Seminars', 'action' => 'view', $seminar->id], ['class' => 'button']);
+                                                echo '</div>';
+                                            }
+                                            ?>
+                                        </article>
+                                    </div>
+								</section>
+						</div>
+					</div>
+			</div>
+
+		<!-- Scripts -->
+			<?= $this->Html->script('/frontend/assets/js/jquery.min.js') ?>
+			<?= $this->Html->script('/frontend/assets/js/browser.min.js') ?>
+			<?= $this->Html->script('/frontend/assets/js/breakpoints.min.js') ?>
+			<?= $this->Html->script('/frontend/assets/js/util.js') ?>
+			<?= $this->Html->script('/frontend/assets/js/main.js') ?>
+
+	</body>
 </html>
 
-<script>
-
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const navItems = document.querySelectorAll('.top-nav li');
-        const defaultActiveContent = 'counselor'; // Set the default content to be active
-
-        function clearActiveStates() {
-            navItems.forEach(item => {
-                item.classList.remove('active');
-            });
-        }
-
-        function setActiveState(content) {
-            clearActiveStates();
-            const activeNavItem = document.querySelector(`.top-nav a[data-content="${content}"]`).parentElement;
-            activeNavItem.classList.add('active');
-        }
-
-        // Set the default active state
-        setActiveState(defaultActiveContent);
-
-        navItems.forEach(item => {
-            item.querySelector('a[data-content]').addEventListener('click', function(e) {
-                e.preventDefault();
-                const contentToShow = this.getAttribute('data-content');
-
-                document.querySelectorAll('.content-section').forEach(section => {
-                    section.style.display = 'none';
-                });
-
-                document.getElementById(contentToShow + '-content').style.display = 'block';
-                setActiveState(contentToShow);
-            });
-        });
-    });
-
-
-</script>
 
 
 

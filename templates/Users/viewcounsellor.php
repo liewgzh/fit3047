@@ -38,10 +38,6 @@
                     <?= $this->Text->autoParagraph(h($user->bio)); ?>
                 </blockquote>
             </div>
-
-
-
-            </div>
         </div>
     </div>
 </div>

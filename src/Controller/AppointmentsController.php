@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 use DateTime;
 use DateInterval;
+use Cake\View\JsonView;
 
 /**
  * Appointments Controller
@@ -18,7 +19,8 @@ class AppointmentsController extends AppController
     parent::beforeFilter($event);
     // Configure the login action to not require authentication, preventing
     // the infinite redirect loop issue
-    $this->Authentication->addUnauthenticatedActions(['guestadd']);}
+    $this->Authentication->addUnauthenticatedActions(['guestadd']);
+    $this->Authentication->addUnauthenticatedActions(['calendar']);}
     /**
      * Index method
      *
@@ -42,6 +44,25 @@ class AppointmentsController extends AppController
         $appointments = $query->all();
 
         $this->set(compact('appointments'));
+    }
+
+    public function calendar()
+        {    $this->Authorization->skipAuthorization();
+
+            $user = $this->request->getAttribute('identity');
+
+            $query = $this->Appointments->find()
+                ->contain(['Clients', 'Counsellors', 'Services']);
+            $appointments = $this->Appointments->find()->contain(['Clients', 'Counsellors', 'Services']);
+
+            $appointments = $query->all();
+
+            $this->set(compact('appointments'));
+        }
+
+    public function viewClasses(): array
+    {
+        return [JsonView::class];
     }
 
     /**
@@ -84,6 +105,7 @@ class AppointmentsController extends AppController
                 $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
                 $appointment->end_time = $endTime->format('H:i:s');
                 $appointment->appointment_status="Scheduled";
+                $appointment->payment_status="Unpaid";
 
                 if ($this->Appointments->Conflicts($appointment)) {
                     $this->Flash->set('This appointment time is already booked. Please choose a different time.');
@@ -132,11 +154,18 @@ class AppointmentsController extends AppController
                 'action' => 'display']);
         }
 
+        // Check the role of the logged-in user
+        $user = $this->request->getAttribute('identity');
+
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());
+            // If the user is a counsellor or a client, prevent them from modifying the payment_status field
+            if ($user->role === 'Client' || $user->role === 'Counsellor') {
+                $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData(), ['accessibleFields' => ['payment_status' => false]]);
+            } else {
+                $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());
+            }
             if ($this->Appointments->save($appointment)) {
                 $this->Flash->success(__('The appointment has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->set('The appointment could not be saved. Please, try again.');
