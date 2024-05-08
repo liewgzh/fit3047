@@ -126,29 +126,30 @@ $checkConnection = function (string $name) {
 								</section>
 
 							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Meet our counsellors</h2>
-									</header>
-									 <div class="row">
-                                        <?php
-                                        foreach ($counselors as $counselor) {
-                                            $detailUrl = $this->Url->build(['controller' => 'Users', 'action' => 'view', $counselor->id]);
-                                            echo '<div class="column">';
+                            <section>
+                                <header class="major">
+                                    <h2>Meet our counselors</h2>
+                                </header>
+                                <div class="row">
+                                    <?php foreach ($counselors as $counselor): ?>
+                                        <div class="column">
+                                            <?php if (!empty($counselor->image_path)): ?>
+                                                <img src="<?= $this->Url->webroot($counselor->image_path) ?>" width="50" height="50" alt="Profile Image">
+                                            <?php else: ?>
+                                                <?= $this->Html->image('usericon.png', ['alt' => 'No Image', 'style' => 'width:50px; height:50px;']) ?>
+                                            <?php endif; ?>
+                                            <h3><?= h($counselor->first_name . ' ' . $counselor->last_name) ?></h3>
+                                            <p><?= h($counselor->bio) ?></p>
+                                            <?= $this->Html->link('Learn More', ['controller' => 'Users', 'action' => 'viewcounsellor', $counselor->id], ['class' => 'button']) ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </section>
 
-                                            echo $this->Html->image('usericon.png', ['alt' => 'Counselor image', 'class' => 'smaller-image']);
-                                            echo '<h3>' . h($counselor->first_name . ' ' . $counselor->last_name) . '</h3>';
 
-                                            echo '<p>' . h($counselor->bio) . '</p>';
-                                            // We can also make the 'Learn More' button a link to the detail page
-                                            echo $this->Html->link('Learn More', ['controller' => 'Users', 'action' => 'viewcounsellor', $counselor->id], ['class' => 'button']);
-                                            echo '</div>';
-                                        }
-                                        ?>
-                                    </div>
-								</section>
 
-							<!-- Section -->
+
+                            <!-- Section -->
 								<section>
 									<header class="major">
 										<h2>Watch our seminars</h2>

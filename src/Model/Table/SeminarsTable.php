@@ -75,7 +75,15 @@ class SeminarsTable extends Table
         $validator
             ->scalar('video_path')
             ->maxLength('video_path', 255)
-            ->allowEmptyString('video_path');
+            ->allowEmptyString('video_path')
+            ->add('video_path', 'fileSize', [
+                'rule' => ['fileSize', '<=', '200MB'],
+                'message' => 'The video must be less than or equal to 200MB.'
+            ])
+            ->add('video_path', 'fileType', [
+                'rule' => ['mimeType', ['video/mp4', 'video/avi']],
+                'message' => 'Please upload a valid video (mp4, avi).'
+            ]);
 
         return $validator;
     }
