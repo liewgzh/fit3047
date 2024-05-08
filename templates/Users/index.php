@@ -21,6 +21,7 @@
                 <tr>
                     <tr>
                         <th><?= h('Id') ?></th>
+                        <th><?= h('Profile Image') ?></th>
                         <th><?= h('First Name') ?></th>
                         <th><?= h('Last Name') ?></th>
                         <th><?= h('Email') ?></th>
@@ -39,6 +40,15 @@
                 <?php foreach ($users as $user): ?>
                 <tr>
                     <td><?= $this->Number->format($user->id) ?></td>
+                    <td>
+                        <?php if (!empty($user->image_path)): ?>
+                            <img src="<?= $this->Url->webroot($user->image_path) ?>" width="50" height="50" alt="Profile Image">
+
+
+                        <?php else: ?>
+                            <?= $this->Html->image('default.png', ['alt' => 'No Image', 'style' => 'width:50px; height:50px;']) ?>
+                        <?php endif; ?>
+                    </td>
                     <td><?= h($user->first_name) ?></td>
                     <td><?= h($user->last_name) ?></td>
                     <td><?= h($user->email) ?></td>

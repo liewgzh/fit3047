@@ -30,7 +30,13 @@
             <h3><?= h($user->first_name) ?></h3>
             <?php if (!empty($user->image_path)): ?>
                 <div class="user-image">
-                    <?= $this->Html->image($user->image_path, ['alt' => 'User Image', 'class' => 'user-photo']) ?>
+                    <?php if (!empty($user->image_path)): ?>
+                        <img src="<?= $this->Url->webroot($user->image_path) ?>" width="50" height="50" alt="Profile Image">
+
+
+                    <?php else: ?>
+                        <?= $this->Html->image('default.png', ['alt' => 'No Image', 'style' => 'width:50px; height:50px;']) ?>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
             <table>

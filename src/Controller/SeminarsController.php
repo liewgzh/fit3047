@@ -75,8 +75,8 @@ class SeminarsController extends AppController
             $file = $this->request->getData('video_path');
             if (!empty($file) && is_uploaded_file($file->getStream()->getMetaData('uri'))) {
                 $filename = $file->getClientFilename();
-                $destination = '/opt/homebrew/var/www/team007-app_fit3047/webroot/videos/' . $filename; // Destination path
 
+                $destination = WWW_ROOT . 'videos' . DS . $filename;
                 if (move_uploaded_file($file->getStream()->getMetaData('uri'), $destination)) {
                     $seminar->video_path = 'videos/' . $filename; // Save relative path
                 }
@@ -112,7 +112,6 @@ class SeminarsController extends AppController
         $this->Authorization->skipAuthorization();
         $user = $this->request->getAttribute('identity');
 
-        // Only allow admins to add seminars
         if ($user->role !== 'Admin') {
             $this->Flash->set(__('You are not authorized to edit seminars.'));
             return $this->redirect(['action' => 'index']);
@@ -121,6 +120,18 @@ class SeminarsController extends AppController
         $seminar = $this->Seminars->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $seminar = $this->Seminars->patchEntity($seminar, $this->request->getData());
+
+
+            // Check if there's a file and it's uploaded via HTTP POST
+            $file = $this->request->getData('video_path');
+            if (!empty($file) && is_uploaded_file($file->getStream()->getMetaData('uri'))) {
+                $filename = $file->getClientFilename();
+
+                $destination = WWW_ROOT . 'videos' . DS . $filename;
+                if (move_uploaded_file($file->getStream()->getMetaData('uri'), $destination)) {
+                    $seminar->video_path = 'videos/' . $filename; // Save relative path
+                }
+            }
             if ($this->Seminars->save($seminar)) {
                 $this->Flash->success(__('The seminar has been updated.'));
                 return $this->redirect(['action' => 'index']);

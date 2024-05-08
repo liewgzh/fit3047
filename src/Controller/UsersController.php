@@ -241,13 +241,23 @@ class UsersController extends AppController
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $data = $this->request->getData();
+            $file = $data['image_path'];
+            unset($data['image_path']);
+            $user = $this->Users->patchEntity($user, $data);
 
-            $image = $this->request->getData('image_path');
-            if (!empty($image->getClientFilename()) && !$image->getError()) {
-                $destination = WWW_ROOT . 'img' . DS . 'user_images' . DS . $image->getClientFilename();
-                $image->moveTo($destination);
-                $user->image_path = 'user_images/' . $image->getClientFilename();
+            if ($file instanceof \Psr\Http\Message\UploadedFileInterface && $file->getError() === UPLOAD_ERR_OK) {
+                $filename = $file->getClientFilename();
+                $destination = WWW_ROOT . 'user_images' . DS . $filename;
+
+                // Test script to check file moving
+                if (move_uploaded_file($file->getStream()->getMetaData('uri'), $destination)) {
+                    echo "File is moved successfully.";
+                    $user->image_path = 'user_images/' . $filename;
+                } else {
+                    echo "Failed to move the file.";
+                    $this->Flash->error(__('Failed to move the uploaded file.'));
+                }
             }
 
             if ($this->Users->save($user)) {

@@ -22,7 +22,8 @@
     </aside>
     <div class="column column-80">
         <div class="users form content">
-            <?= $this->Form->create($user) ?>
+            <?= $this->Form->create($user, ['enctype' => 'multipart/form-data']) ?>
+
             <fieldset>
                 <legend><?= __('Edit User') ?></legend>
                 <?php
