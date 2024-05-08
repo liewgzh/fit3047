@@ -258,6 +258,28 @@ class AppointmentsController extends AppController
                             } else {
                                 if ($this->Appointments->save($appointment)) {
                                     $this->Flash->success(__('The appointment has been saved.'));
+                                    $mailer = new Mailer('default');
+                                    $mailer
+                                    ->setEmailFormat('html')
+                                    ->setTo($appointment->guest_email)
+                                    ->setSubject('Appointment Confirmation');
+            
+                                    // select email template
+                                    $mailer
+                                    ->viewBuilder()
+                                    ->setTemplate('appointment_confirmation');
+            
+                                    // transfer required view variables to email template
+                                    $mailer
+                                    ->setViewVars([
+                                        'clientName' => $appointment->guest_name, // Adjust based on your model
+                                        'appointmentDate' => $startDateTimeStr,
+                                        'zoomLink' => 'Your Zoom Link Here' // Static or dynamic link
+                                    ]);
+                                    if (!$mailer->deliver()) {
+                                        $this->Flash->error('There was an issue sending the appointment confirmation email.');
+                                    }
+                                    
                                     return $this->redirect(['action' => 'index']);
                                 }
                                 $this->Flash->set('The appointment could not be saved. Please, try again.');
