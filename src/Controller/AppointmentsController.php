@@ -287,8 +287,10 @@ class AppointmentsController extends AppController
                                     $service = $this->Appointments->Services->get($appointment->service_id);
                                     if ( $service->name == "consultation") {
                                         $viewVars['zoomLink'] = 'Your Zoom Link Here';
+                                    }else{
+                                        $viewVars['zoomLink'] = null;
                                     }
-                                    
+
                                     if (!$mailer->deliver()) {
                                         $this->Flash->error('There was an issue sending the appointment confirmation email.');
                                     }
