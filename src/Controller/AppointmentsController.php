@@ -132,7 +132,7 @@ class AppointmentsController extends AppController
                         
 
                         $service = $this->Appointments->Services->get($appointment->service_id);
-                        $zoomlink="";
+                        $zoomLink="";
                         if ( $service->name == "consultation") {
                             $zoomLink = 'Your Zoom Link Here';
                         }else{
@@ -143,7 +143,7 @@ class AppointmentsController extends AppController
                         ->setViewVars([
                             'clientName' => $appointment->guest_name, 
                             'appointmentDate' => $startDateTimeStr,
-                            'zoomlink' => $zoomLink
+                            'zoomLink' => $zoomLink
                             
                         ]);
 
@@ -284,7 +284,7 @@ class AppointmentsController extends AppController
                                     ->setTemplate('appointment_confirmation');
 
                                     $service = $this->Appointments->Services->get($appointment->service_id);
-                                    $zoomlink="";
+                                    $zoomLink="";
                                     if ( $service->name == "consultation") {
                                         $zoomLink = 'Your Zoom Link Here';
                                     }else{
@@ -295,7 +295,7 @@ class AppointmentsController extends AppController
                                     ->setViewVars([
                                         'clientName' => $appointment->guest_name, 
                                         'appointmentDate' => $startDateTimeStr,
-                                        'zoomlink' => $zoomLink
+                                        'zoomLink' => $zoomLink
                                         
                                     ]);
 
