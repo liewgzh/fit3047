@@ -12,8 +12,14 @@
 <div class="services index content">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= __('Services') ?></h1>
+        <?php
+        // Check if the logged-in user is an admin
+        $currentUser = $this->request->getAttribute('identity');
+        if ($currentUser && $currentUser->role === 'Admin'):
+        ?>
         <a href="<?= $this->Url->build(['action' => 'add']) ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-plus fa-sm text-white-50"></i> New Service</a>
+        <?php endif; ?>
     </div>
 
     <div class="table-responsive">
@@ -38,9 +44,14 @@
                         <td><?= $this->Number->format($service->price) ?></td>
 
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $service->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $service->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $service->id], ['confirm' => __('Are you sure you want to delete # {0}?', $service->id)]) ?>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $service->id], ['class' => 'btn btn-primary']) ?>
+                            <?php
+                            // Check if the logged-in user is an admin
+                            if ($currentUser && $currentUser->role === 'Admin'):
+                            ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $service->id], ['class' => 'btn btn-primary']) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $service->id], ['confirm' => __('Are you sure you want to delete # {0}?', $service->id), 'class' => 'btn btn-danger']) ?>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -133,7 +133,7 @@ class UsersController extends AppController
         try {
                 $this->Authorization->authorize($user);
             } catch (\Authorization\Exception\ForbiddenException $e) {
-                $this->Flash->set('You are not allowed to add this user.');
+                $this->Flash->set('You are not allowed to view this user.');
                 return $this->redirect([
                     'controller' => 'Pages',
                     'action' => 'display']);

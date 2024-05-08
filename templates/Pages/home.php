@@ -154,7 +154,7 @@ $checkConnection = function (string $name) {
 									<header class="major">
 										<h2>Watch our seminars</h2>
 									</header>
-									<div class="posts">
+									<div class="row">
 									    <article>
                                             <?php
                                             foreach ($seminars as $seminar) {
