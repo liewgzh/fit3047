@@ -129,22 +129,11 @@ class AppointmentsController extends AppController
                         ->viewBuilder()
                         ->setTemplate('appointment_confirmation');
 
-                        
-
-                        $service = $this->Appointments->Services->get($appointment->service_id);
-                        $zoomLink="";
-                        if ( $service->name == "consultation") {
-                            $zoomLink = 'Your Zoom Link Here';
-                        }else{
-                            $zoomLink = null;
-                        }
-
+                                 
                         $mailer
                         ->setViewVars([
                             'clientName' => $appointment->guest_name, 
-                            'appointmentDate' => $startDateTimeStr,
-                            'zoomLink' => $zoomLink
-                            
+                            'appointmentDate' => $startDateTimeStr,  
                         ]);
 
                         
@@ -271,7 +260,7 @@ class AppointmentsController extends AppController
                             } else {
                                 if ($this->Appointments->save($appointment)) {
                                     $this->Flash->success(__('The appointment has been saved.'));
-                                  
+ 
                                     $mailer = new Mailer('default');
 
                                     $mailer
@@ -283,20 +272,11 @@ class AppointmentsController extends AppController
                                     ->viewBuilder()
                                     ->setTemplate('appointment_confirmation');
 
-                                    $service = $this->Appointments->Services->get($appointment->service_id);
-                                    $zoomLink="";
-                                    if ( $service->name == "consultation") {
-                                        $zoomLink = 'Your Zoom Link Here';
-                                    }else{
-                                        $zoomLink = null;
-                                    }
 
                                     $mailer
                                     ->setViewVars([
                                         'clientName' => $appointment->guest_name, 
-                                        'appointmentDate' => $startDateTimeStr,
-                                        'zoomLink' => $zoomLink
-                                        
+                                        'appointmentDate' => $startDateTimeStr,                                  
                                     ]);
 
 

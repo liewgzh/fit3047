@@ -20,6 +20,8 @@
                             <p>Hi <?= h($clientName) ?>,</p>
                             <p>Thank you for scheduling an appointment with us.</p>
                             <p>Your appointment is confirmed for <strong><?= h($appointmentDate) ?></strong>.</p>
+                            
+
                             <?php if (($zoomLink!=null)): ?>
                                 <p>To join your online consultation, please use the following Zoom link:</p>
                                 <p><a href="<?= h($zoomLink) ?>" target="_blank">Join Zoom Meeting</a></p>
