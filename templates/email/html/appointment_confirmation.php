@@ -24,7 +24,7 @@
                                 <p>To join your online consultation, please use the following Zoom link:</p>
                                 <p><a href="<?= h($zoomLink) ?>" target="_blank">Join Zoom Meeting</a></p>
                             <?php endif; ?>  
-                            <p>If you have any questions or need to reschedule, please contact us at any time.</p>
+                            <p>If you have any questions or need to reschedule, please contact us.</p>
                         </td>
                     </tr>
                 </table>

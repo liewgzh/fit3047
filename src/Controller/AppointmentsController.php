@@ -279,10 +279,16 @@ class AppointmentsController extends AppController
 
                                     $mailer
                                     ->setViewVars([
-                                        'clientName' => $appointment->guest_name, // Adjust based on your model
+                                        'clientName' => $appointment->guest_name, 
                                         'appointmentDate' => $startDateTimeStr,
-                                        'zoomLink' => 'Your Zoom Link Here' // Static or dynamic link
+                                        
                                     ]);
+
+                                    $service = $this->Appointments->Services->get($appointment->service_id);
+                                    if ( $service->name == "consultation") {
+                                        $viewVars['zoomLink'] = 'Your Zoom Link Here';
+                                    }
+                                    
                                     if (!$mailer->deliver()) {
                                         $this->Flash->error('There was an issue sending the appointment confirmation email.');
                                     }
