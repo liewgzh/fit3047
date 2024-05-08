@@ -35,6 +35,7 @@
                     echo $this->Form->control('phone_number');
                     echo $this->Form->control('address');
                     echo $this->Form->control('bio');
+                    echo $this->Form->control('image_path', ['type' => 'file']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

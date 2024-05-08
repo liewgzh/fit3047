@@ -32,6 +32,9 @@ try {
     $counselors = $usersTable->find()
         ->where(['role' => 'Counsellor'])
         ->all(); // Execute the query and get all results
+    $seminarsTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Seminars');
+    $seminars = $seminarsTable->find()->all();
+    $this->set(compact('seminars'));
 } catch (\Exception $e) {
     // Handle exception if there's a problem with the database connection
 }
@@ -143,15 +146,25 @@ $checkConnection = function (string $name) {
                     -->
                 </p>
             </div>
-            <div id="seminar-content" class="content-section" style="display: none;">
+            <div id="seminar-content" class="content-section" style="display: block;"> <!-- Make this visible by default -->
                 <section class="seminars">
                     <div class="row">
-                        <div class="column">
-                            <?= $this->Html->image('cat.jpg', ['alt' => 'Seminar image', 'class' => 'smaller-image']) ?>
-                            <h3>Seminar 1</h3>
-                            <p>Short description or bio of the Seminar.</p>
-                            <?= $this->Html->link(__('Learn More'), '#', ['class' => 'button', 'id' => 'seminar-learn-more-button']) ?>
-                        </div>
+                        <?php
+                        foreach ($seminars as $seminar) {
+                            echo '<div class="column">';
+                            echo '<div class="video-wrapper">';
+                            echo '<video width="320" height="240" controls poster="' . h($seminar->thumbnail_path) . '">';
+                            echo '<source src="' . h($seminar->video_path) . '" type="video/mp4">';
+                            echo 'Your browser does not support the video tag.';
+                            echo '</video>';
+                            echo '</div>';
+                            echo '<h3>' . h($seminar->title) . '</h3>';
+                            echo '<p>' . h($seminar->description) . '</p>';
+                            // Link to view seminar details
+                            echo $this->Html->link('Watch Full Seminar', ['controller' => 'Seminars', 'action' => 'view', $seminar->id], ['class' => 'button']);
+                            echo '</div>';
+                        }
+                        ?>
                     </div>
                 </section>
             </div>

@@ -87,7 +87,7 @@ class UsersTable extends Table
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
 
-        
+
         $validator
             ->scalar('password')
             ->requirePresence('password', 'create')
@@ -137,6 +137,17 @@ class UsersTable extends Table
             ->maxLength('nonce', 255)
             ->allowEmptyString('nonce');
 
+        $validator
+            ->notEmptyFile('image_path')
+            ->uploadedFile('image_path', [
+                'types' => ['image/png'], // only PNG image files
+                'minSize' => 1024, // Min 1 KB
+                'maxSize' => 1024 * 1024 // Max 1 MB
+            ])
+
+            ->add('image_path', 'extension', [
+                'rule' => ['extension', ['png']] // .png file extension only
+            ]);
 
         return $validator;
     }
