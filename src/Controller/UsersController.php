@@ -53,7 +53,7 @@ class UsersController extends AppController
 
 
     public function login()
-    {   
+    {
         $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
@@ -152,28 +152,47 @@ class UsersController extends AppController
      */
     public function add()
     {
-
         $user = $this->Users->newEmptyEntity();
         try {
             $this->Authorization->authorize($user);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->set('You are not allowed to add this user.');
-            return $this->redirect([
-                'controller' => 'Pages',
-                'action' => 'display']);
+            $this->Flash->error('You are not allowed to add this user.');
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
         }
 
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->set('The user has been saved.');
+            $data = $this->request->getData();
+            $file = $data['image_path']; // Assuming image_path is the field name for the file upload
 
-                return $this->redirect(['action' => 'index']);
+            unset($data['image_path']);
+            $user = $this->Users->patchEntity($user, $data);
+
+            if ($file instanceof \Psr\Http\Message\UploadedFileInterface && $file->getError() === UPLOAD_ERR_OK) {
+                $filename = $file->getClientFilename();
+                $destination = WWW_ROOT . 'user_images' . DS . $filename;
+
+                // Test script to check file moving
+                if (move_uploaded_file($file->getStream()->getMetaData('uri'), $destination)) {
+                    echo "File is moved successfully.";
+                    $user->image_path = 'user_images/' . $filename;
+                } else {
+                    echo "Failed to move the file.";
+                    $this->Flash->error(__('Failed to move the uploaded file.'));
+                }
             }
-            $this->Flash->set('The user could not be saved. Please, try again.');
+
+            if ($this->Users->save($user)) {
+                $this->Flash->success('The user has been saved.');
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('The user could not be saved. Please, try again.');
+            }
         }
+
         $this->set(compact('user'));
     }
+
+
 
     public function useradd()
     {
@@ -191,7 +210,7 @@ class UsersController extends AppController
                 // Redirect to the general homepage as a logged-in user
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
             }
-            
+
             $this->Flash->set('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
@@ -223,6 +242,14 @@ class UsersController extends AppController
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            $image = $this->request->getData('image_path');
+            if (!empty($image->getClientFilename()) && !$image->getError()) {
+                $destination = WWW_ROOT . 'img' . DS . 'user_images' . DS . $image->getClientFilename();
+                $image->moveTo($destination);
+                $user->image_path = 'user_images/' . $image->getClientFilename();
+            }
+
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -296,8 +323,8 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-    
-    
+
+
 
 
 

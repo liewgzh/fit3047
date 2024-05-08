@@ -18,6 +18,11 @@
     <div class="column column-80">
         <div class="users view content">
             <h3><?= h($user->first_name) ?></h3>
+            <?php if (!empty($user->image_path)): ?>
+                <div class="user-image">
+                    <?= $this->Html->image($user->image_path, ['alt' => 'User Image', 'class' => 'user-photo']) ?>
+                </div>
+            <?php endif; ?>
             <table>
                 <tr>
                     <th><?= __('First Name') ?></th>

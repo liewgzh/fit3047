@@ -59,6 +59,7 @@ class User extends Entity
         'date_of_birth' => true,
         'phone_number' => true,
         'address' => true,
+        'image_path' => true,
         'bio' => true,
         'created' => true,
         'modified' => true,

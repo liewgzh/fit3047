@@ -13,10 +13,12 @@
     </aside>
     <div class="column column-80">
         <div class="users form content">
-            <?= $this->Form->create($user) ?>
+            <?= $this->Form->create($user, ['enctype' => 'multipart/form-data']) ?>
+
             <fieldset>
                 <legend><?= __('Add User') ?></legend>
                 <?php
+                    echo $this->Form->control('image_path', ['type' => 'file']);
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');
                     echo $this->Form->control('email');
@@ -25,7 +27,7 @@
                         'type' => 'password',
                         'label' => 'Confirm Password'
                     ]);
-                    
+
                     echo $this->Form->control('role', [
                         'type' => 'select',
                         'options' => [
@@ -33,8 +35,8 @@
                             'Counsellor' => 'Counsellor',
                             'Client' => 'Client'
                         ],
-                        'empty' => [null => 'Select Role'], 
-                        'label' => 'Role' 
+                        'empty' => [null => 'Select Role'],
+                        'label' => 'Role'
                     ]);
 
 
@@ -45,7 +47,7 @@
                             'Female' => 'Female',
                             'Other' => 'Other'
                         ],
-                        'empty' => [null => 'Select Gender'], 
+                        'empty' => [null => 'Select Gender'],
                         'label' => 'Gender'
                     ]);
                     echo $this->Form->control('date_of_birth');
