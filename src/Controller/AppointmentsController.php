@@ -130,17 +130,23 @@ class AppointmentsController extends AppController
                         ->setTemplate('appointment_confirmation');
 
                         
+
+                        $service = $this->Appointments->Services->get($appointment->service_id);
+                        $zoomlink="";
+                        if ( $service->name == "consultation") {
+                            $zoomLink = 'Your Zoom Link Here';
+                        }else{
+                            $zoomLink = null;
+                        }
+
                         $mailer
                         ->setViewVars([
-                            'clientName' => $appointment->client->first_name, // Adjust based on your model
+                            'clientName' => $appointment->guest_name, 
                             'appointmentDate' => $startDateTimeStr,
+                            'zoomlink' => $zoomLink
                             
                         ]);
 
-                        $service = $this->Appointments->Services->get($appointment->service_id);
-                        if ( $service->name == "consultation") {
-                            $viewVars['zoomLink'] = 'Your Zoom Link Here';
-                        }
                         
                         if (!$mailer->deliver()) {
                             $this->Flash->error('There was an issue sending the appointment confirmation email.');
@@ -277,19 +283,23 @@ class AppointmentsController extends AppController
                                     ->viewBuilder()
                                     ->setTemplate('appointment_confirmation');
 
+                                    $service = $this->Appointments->Services->get($appointment->service_id);
+                                    $zoomlink="";
+                                    if ( $service->name == "consultation") {
+                                        $zoomLink = 'Your Zoom Link Here';
+                                    }else{
+                                        $zoomLink = null;
+                                    }
+
                                     $mailer
                                     ->setViewVars([
                                         'clientName' => $appointment->guest_name, 
                                         'appointmentDate' => $startDateTimeStr,
+                                        'zoomlink' => $zoomLink
                                         
                                     ]);
 
-                                    $service = $this->Appointments->Services->get($appointment->service_id);
-                                    if ( $service->name == "consultation") {
-                                        $viewVars['zoomLink'] = 'Your Zoom Link Here';
-                                    }else{
-                                        $viewVars['zoomLink'] = null;
-                                    }
+
 
                                     if (!$mailer->deliver()) {
                                         $this->Flash->error('There was an issue sending the appointment confirmation email.');
