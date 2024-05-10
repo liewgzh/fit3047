@@ -96,7 +96,7 @@ class UsersTable extends Table
         // Validate retyped password
         $validator
             ->requirePresence('password_confirm', 'create')
-            ->sameAs('password_confirm', 'password', 'Both passwords must match');
+            ->sameAs('password_confirm', 'password', 'Passwords do not match.');
 
 
 
@@ -119,7 +119,7 @@ class UsersTable extends Table
             ->maxLength('phone_number', 25)
             ->requirePresence('phone_number', 'create')
             ->notEmptyString('phone_number')
-            ->numeric('phone_number', __('The phone number should only contain numbers.'));
+            ->numeric('phone_number', __('Phone number only allows digits'));
 
 
         $validator

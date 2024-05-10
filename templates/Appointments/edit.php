@@ -10,7 +10,7 @@
 <h1 class="h3 mb-2 text-gray-800">Edit Appointment</h1>
 <?= $this->Form->create($appointment) ?>
  <?php
-     echo $this->Form->control('client_id', ['options' => $clients, 'required' => true, 'empty' => true]);
+     echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
      echo $this->Form->control('guest_name');
      echo $this->Form->control('guest_email');
      echo $this->Form->control('counsellor_id', ['options' => $counsellors]);

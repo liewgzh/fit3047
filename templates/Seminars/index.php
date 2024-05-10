@@ -19,14 +19,14 @@ echo $this->Html->script('/vendor/datatables/dataTables.bootstrap4.min.js', ['bl
         <?php endif; ?>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered table-sm" id="dataTable" style="width:100%">
             <thead>
             <tr>
-                <th><?= __('Title') ?></th>
-                <th><?= __('Video Path') ?></th>
-                <th><?= __('Created') ?></th>
-                <th><?= __('Modified') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th style="width:25%"><?= __('Title') ?></th>
+                <th style="width:25%"><?= __('Video Path') ?></th>
+                <th id="created-header" style="width:15%"><?= __('Created') ?></th>
+                <th id="modified-header" style="width:15%"><?= __('Modified') ?></th>
+                <th style="width:20%" class="actions"><?= __('Actions') ?></th>
             </tr>
             </thead>
             <tbody>
@@ -34,8 +34,8 @@ echo $this->Html->script('/vendor/datatables/dataTables.bootstrap4.min.js', ['bl
                 <tr>
                     <td><?= h($seminar->title) ?></td>
                     <td><?= h($seminar->video_path) ?></td>
-                    <td><?= h($seminar->created) ?></td>
-                    <td><?= h($seminar->modified) ?></td>
+                    <td id="created-field-<?= $seminar->id ?>" class="created-field"><?= h($seminar->created) ?></td>
+                    <td id="modified-field-<?= $seminar->id ?>" class="modified-field"><?= h($seminar->modified) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $seminar->id], ['class' => 'btn btn-primary']) ?>
                         <?php
@@ -53,6 +53,35 @@ echo $this->Html->script('/vendor/datatables/dataTables.bootstrap4.min.js', ['bl
         </table>
     </div>
 </div>
+
+<script>
+    // Function to hide "Created" and "Modified" fields based on window width
+    function hideFieldsOnMobile() {
+        if (window.innerWidth <= 768) {
+            document.getElementById("created-header").style.display = "none";
+            document.getElementById("modified-header").style.display = "none";
+            <?php foreach ($seminars as $seminar): ?>
+                document.getElementById("created-field-<?= $seminar->id ?>").style.display = "none";
+                document.getElementById("modified-field-<?= $seminar->id ?>").style.display = "none";
+            <?php endforeach; ?>
+        } else {
+            // Show the fields if the window width is greater than 768px
+            document.getElementById("created-header").style.display = "";
+            document.getElementById("modified-header").style.display = "";
+            <?php foreach ($seminars as $seminar): ?>
+                document.getElementById("created-field-<?= $seminar->id ?>").style.display = "";
+                document.getElementById("modified-field-<?= $seminar->id ?>").style.display = "";
+            <?php endforeach; ?>
+        }
+    }
+
+    // Call the function initially when the page loads
+    document.addEventListener("DOMContentLoaded", hideFieldsOnMobile);
+
+    // Add event listener to detect window resize
+    window.addEventListener("resize", hideFieldsOnMobile);
+</script>
+
 <script>
     $(document).ready(function() {
         $('#dataTable').DataTable();

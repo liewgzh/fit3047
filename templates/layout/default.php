@@ -68,6 +68,14 @@ $currentController = $this->getRequest()->getParam('controller');
                 Services
             </div>
 
+            <!-- Guest appointment -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'guestadd']) ?>">
+                    <i class="fas fa-fw fa-check"></i>
+                    <span>Book As Guest</span>
+                </a>
+            </li>
+
             <!-- Nav Item - Appointments Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -345,5 +353,14 @@ $currentController = $this->getRequest()->getParam('controller');
 
 <?= $this->fetch('script') ?>
 </body>
+
+<script>
+    // JavaScript to hide sidebar on mobile by default
+    document.addEventListener("DOMContentLoaded", function() {
+        if (window.innerWidth <= 768) {
+            document.getElementById("accordionSidebar").classList.add("toggled");
+        }
+    });
+</script>
 
 </html>

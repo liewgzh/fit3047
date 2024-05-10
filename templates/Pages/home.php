@@ -121,7 +121,7 @@ $checkConnection = function (string $name) {
 										</ul>
 									</div>
 									<span class="image object">
-										<img src="webroot/frontend/images/pic10.jpg" alt="" />
+										<img src="webroot/frontend/images/flowers.png" alt="" />
 									</span>
 								</section>
 
@@ -132,7 +132,7 @@ $checkConnection = function (string $name) {
                                 </header>
                                 <div class="row">
                                     <?php foreach ($counselors as $counselor): ?>
-                                        <div class="column">
+                                        <div class="column" style="width: 200px; margin: 10px;">
                                             <?php if (!empty($counselor->image_path)): ?>
                                                 <img src="<?= $this->Url->webroot($counselor->image_path) ?>" width="50" height="50" alt="Profile Image">
                                             <?php else: ?>

@@ -7,6 +7,7 @@
 ?>
 <div class="appointments index content">
         <h1 class="h3 mb-0 text-gray-800"><?= __('Calendar') ?></h1>
+        <h2 style="font-size: small;"> Already booked appointments indicated below </h2>
         <div id='calendar'></div>
     <script>
         $(document).ready(function() {
