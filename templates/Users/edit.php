@@ -3,6 +3,13 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+$currentUserIdentity = $this->request->getAttribute('identity');
+
+
+
+
+
+
 ?>
 <div class="row">
     <aside class="column">
@@ -30,13 +37,15 @@
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');
                     echo $this->Form->control('email');
-                    echo $this->Form->control('role');
+                    if ($currentUserIdentity->role === 'Admin') {
+                        echo $this->Form->control('role');
+                    }
                     echo $this->Form->control('gender');
                     echo $this->Form->control('date_of_birth');
                     echo $this->Form->control('phone_number');
                     echo $this->Form->control('address');
                     echo $this->Form->control('bio');
-                    echo $this->Form->control('image_path', ['type' => 'file']);
+                    echo $this->Form->control('image_path', ['type' => 'file','required' => false]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
