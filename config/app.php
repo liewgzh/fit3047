@@ -225,8 +225,8 @@ return [
             /*
              * It is recommended to set these options through your environment or app_local.php
              */
-            'username' => 'admin@u24s1007.iedev.org',
-            'password' => '^;i*+TkdN}3p',
+            'username' => 'admin@review.u24s1007.iedev.org',
+            'password' => '$Y5w6R.k4n43',
             'client' => null,
             'tls' => false,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
@@ -245,7 +245,7 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'admin@u24s1007.iedev.org',
+            'from' => 'admin@review.u24s1007.iedev.org',
             /*
              * Will by default be set to config value of App.encoding, if that exists otherwise to UTF-8.
              */
