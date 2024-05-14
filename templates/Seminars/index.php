@@ -13,7 +13,7 @@ echo $this->Html->script('/vendor/datatables/dataTables.bootstrap4.min.js', ['bl
         <?php
             // Check if the logged-in user is an admin
             $currentUser = $this->request->getAttribute('identity');
-            if ($currentUser && $currentUser->role === 'Admin'):
+            if ($currentUser && ($currentUser->role === 'Admin' || $currentUser->role === 'Counsellor') ):
             ?>
         <?= $this->Html->link(__('New Seminar'), ['action' => 'add'], ['class' => 'd-none d-sm-inline-block btn btn-sm btn-primary shadow-sm']) ?>
         <?php endif; ?>
@@ -41,7 +41,7 @@ echo $this->Html->script('/vendor/datatables/dataTables.bootstrap4.min.js', ['bl
                         <?php
                         // Check if the logged-in user is an admin
                         $currentUser = $this->request->getAttribute('identity');
-                        if ($currentUser && $currentUser->role === 'Admin'):
+                        if ($currentUser && ($currentUser->role === 'Admin' || $currentUser->role === 'Counsellor')):
                         ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $seminar->id], ['class' => 'btn btn-primary']) ?>
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $seminar->id], ['confirm' => __('Are you sure you want to delete # {0}?', $seminar->id), 'class' => 'btn btn-danger']) ?>
