@@ -54,7 +54,7 @@ $currentController = $this->getRequest()->getParam('controller');
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item <?= ($currentController === 'Pages') ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>">
                     <i class="fas fa-fw fa-house-user"></i>
                     <span>Homepage</span></a>
@@ -69,7 +69,7 @@ $currentController = $this->getRequest()->getParam('controller');
             </div>
 
             <!-- Guest appointment -->
-            <li class="nav-item">
+            <li class="nav-item <?= ($currentController === 'Appointments') ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'guestadd']) ?>">
                     <i class="fas fa-fw fa-check"></i>
                     <span>Book As Guest</span>
@@ -77,7 +77,8 @@ $currentController = $this->getRequest()->getParam('controller');
             </li>
 
             <!-- Nav Item - Appointments Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item <?= ($currentController === 'Appointments') ? 'active' : '' ?>">
+
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-calendar-check"></i>
@@ -93,7 +94,8 @@ $currentController = $this->getRequest()->getParam('controller');
             </li>
 
             <!-- Nav Item - Seminars Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item <?= ($currentController === 'Seminars') ? 'active' : '' ?>">
+
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeminars"
                    aria-expanded="true" aria-controls="collapseSeminars">
                     <i class="fas fa-fw fa-video"></i>
@@ -124,7 +126,8 @@ $currentController = $this->getRequest()->getParam('controller');
             </div>
 
             <!-- Nav Item - Users Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item <?= ($currentController === 'Users') ? 'active' : '' ?>">
+
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-user"></i>
@@ -169,7 +172,8 @@ $currentController = $this->getRequest()->getParam('controller');
             </li>
 
             <!-- Nav Item - Services -->
-            <li class="nav-item">
+            <li class="nav-item <?= ($currentController === 'Services') ? 'active' : '' ?>">
+
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseServices"
                     aria-expanded="true" aria-controls="collapseServices">
                     <i class="fas fa-fw fa-book"></i>

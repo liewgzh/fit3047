@@ -12,7 +12,13 @@
                 <?= $this->Html->link(__('Edit Appointment'), ['action' => 'edit', $appointment->id]) ?>
             </div>
             <div class="side-nav-item">
-                <?= $this->Form->postLink(__('Delete Appointment'), ['action' => 'delete', $appointment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $appointment->id)]) ?>
+                <?= $this->Form->postLink(
+                    __('Delete Appointment'),
+                    ['action' => 'delete', $appointment->id],
+                    [
+                        'confirm' => __('Are you sure you want to delete this appointment scheduled for {0} at {1}?', $appointment->appointment_date, $appointment->start_time)
+                    ]
+                ) ?>
             </div>
             <div class="side-nav-item">
                 <?= $this->Html->link(__('List Appointments'), ['action' => 'index']) ?>

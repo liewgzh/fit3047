@@ -80,6 +80,12 @@ class ServicesTable extends Table
         $validator
             ->decimal('price')
             ->maxLength('price', 10, 'Price cannot exceed 10 digits')
+            ->add('price', 'validFormat', [
+                'rule' => function ($value) {
+                    return is_numeric($value) && $value >= 0;
+                },
+                'message' => 'Please enter a positive number for the price'
+            ])
             ->requirePresence('price', 'create')
             ->notEmptyString('price');
 

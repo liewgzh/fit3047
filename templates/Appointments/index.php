@@ -57,7 +57,15 @@
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $appointment->id], ['class' => 'btn btn-primary']) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $appointment->id], ['class' => 'btn btn-primary']) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $appointment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $appointment->id), 'class' => 'btn btn-danger']) ?>
+                        <?= $this->Form->postLink(
+                            __('Delete'),
+                            ['action' => 'delete', $appointment->id],
+                            [
+                                'confirm' => __('Are you sure you want to delete the appointment scheduled for {0} at {1}? This action cannot be undone.', h($appointment->appointment_date), h($appointment->start_time)),
+                                'class' => 'btn btn-danger'
+                            ]
+                        ) ?>
+
                     </td>
                 </tr>
                 <?php endforeach; ?>
