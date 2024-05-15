@@ -241,6 +241,9 @@ class AppointmentsController extends AppController
         if ($this->request->is('post')) {
             $appointment = $this->Appointments->patchEntity($appointment, $this->request->getData());
             $service = $this->Appointments->Services->get($appointment->service_id);
+            $serviceName=$service->service_title;
+            debug($serviceName);
+
             $startDateTimeStr = $appointment->appointment_date->format('Y-m-d') . ' ' . $appointment->start_time->format('H:i:s');
             $startDateTime = new \DateTime($startDateTimeStr);
 
@@ -276,7 +279,8 @@ class AppointmentsController extends AppController
                                     $mailer
                                     ->setViewVars([
                                         'clientName' => $appointment->guest_name, 
-                                        'appointmentDate' => $startDateTimeStr,                                  
+                                        'appointmentDate' => $startDateTimeStr,  
+                                        'serviceName'=> $serviceName                                
                                     ]);
 
 

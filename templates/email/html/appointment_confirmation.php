@@ -43,6 +43,10 @@
       <p>Hi <?= h($clientName) ?>,</p>
       <p>Thank you for scheduling an appointment with us.</p>
       <p>Your appointment is confirmed for <strong><?= h($appointmentDate) ?></strong>.</p>
+
+      <?php if (h($serviceName) == 'consultation'): ?>
+        <p>Your appointment will be conducted via Zoom. Please use the following link to join the meeting: <a href="https://zoom.us/">Join Zoom Meeting</a></p>
+      <?php endif; ?>
       
       <p>If you have any questions or need to reschedule, please contact us.</p>
     </div>
