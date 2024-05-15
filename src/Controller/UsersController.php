@@ -69,7 +69,7 @@ class UsersController extends AppController
 
         // display error if user submitted their credentials but authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->set('Email address and/or Password is incorrect. Please try again. ');
+            $this->Flash->error('Email address and/or Password is incorrect. Please try again. ');
         }
     }
 
@@ -106,7 +106,7 @@ class UsersController extends AppController
 
         // Check if the user is an admin
         if ($user->role !== 'Admin') {
-            $this->Flash->set('You are not authorized to access this page.');
+            $this->Flash->error('You are not authorized to access this page.');
             return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
 
@@ -133,7 +133,7 @@ class UsersController extends AppController
         try {
                 $this->Authorization->authorize($user);
             } catch (\Authorization\Exception\ForbiddenException $e) {
-                $this->Flash->set('You are not allowed to view this user.');
+                $this->Flash->error('You are not allowed to view this user.');
                 return $this->redirect([
                     'controller' => 'Pages',
                     'action' => 'display']);
@@ -211,7 +211,7 @@ class UsersController extends AppController
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
             }
 
-            $this->Flash->set('The user could not be saved. Please, try again.');
+            $this->Flash->error('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
     }
@@ -234,7 +234,7 @@ class UsersController extends AppController
         try {
             $this->Authorization->authorize($user);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->set('You are not allowed to edit this user.');
+            $this->Flash->error('You are not allowed to edit this user.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
@@ -267,7 +267,7 @@ class UsersController extends AppController
                                 'controller' => 'Pages',
                                 'action' => 'display']);
             }
-            $this->Flash->set('The user could not be saved. Please, try again.');
+            $this->Flash->error('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
     }
@@ -288,7 +288,7 @@ class UsersController extends AppController
         try {
             $this->Authorization->authorize($user);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->set('You are not allowed to delete this user.');
+            $this->Flash->error('You are not allowed to delete this user.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
@@ -297,7 +297,7 @@ class UsersController extends AppController
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {
-            $this->Flash->set('The user could not be deleted. Please, try again.');
+            $this->Flash->error('The user could not be deleted. Please, try again.');
         }
 
         return $this->redirect([
@@ -330,7 +330,7 @@ class UsersController extends AppController
 
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
             }
-            $this->Flash->set('The user could not be saved. Please, try again.');
+            $this->Flash->error('The user could not be saved. Please, try again.');
         }
         $this->set(compact('user'));
     }
@@ -382,13 +382,13 @@ class UsersController extends AppController
                     //Send email
                     if (!$mailer->deliver()) {
                         // Just in case something goes wrong when sending emails
-                        $this->Flash->set('We have encountered an issue when sending you emails. Please try again. ');
+                        $this->Flash->error('We have encountered an issue when sending you emails. Please try again. ');
 
                         return $this->render(); // Skip the rest of the controller and render the view
                     }
                 } else {
                     // Just in case something goes wrong when saving nonce and expiry
-                    $this->Flash->set('We are having issue to reset your password. Please try again. ');
+                    $this->Flash->error('We are having issue to reset your password. Please try again. ');
 
                     return $this->render(); // Skip the rest of the controller and render the view
                 }
@@ -419,7 +419,7 @@ class UsersController extends AppController
 
         // If nonce cannot find the user, or nonce is expired, prompt for re-reset password
         if (!$user || $user->nonce_expiry < DateTime::now()) {
-            $this->Flash->set('Your link is invalid or expired. Please try again.');
+            $this->Flash->error('Your link is invalid or expired. Please try again.');
 
             return $this->redirect(['action' => 'forgetPassword']);
         }
@@ -438,7 +438,7 @@ class UsersController extends AppController
 
                 return $this->redirect(['action' => 'login']);
             }
-            $this->Flash->set('The password cannot be reset. Please try again.');
+            $this->Flash->error('The password cannot be reset. Please try again.');
         }
 
         $this->set(compact('user'));
