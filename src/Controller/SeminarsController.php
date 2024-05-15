@@ -59,7 +59,7 @@ class SeminarsController extends AppController
         $user = $this->request->getAttribute('identity');
 
         // Only allow admins to add seminars
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Client') {
             $this->Flash->set(__('You are not authorized to add seminars.'));
             return $this->redirect(['action' => 'index']);
         }
@@ -112,7 +112,7 @@ class SeminarsController extends AppController
         $this->Authorization->skipAuthorization();
         $user = $this->request->getAttribute('identity');
 
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Client') {
             $this->Flash->set(__('You are not authorized to edit seminars.'));
             return $this->redirect(['action' => 'index']);
         }
@@ -157,7 +157,7 @@ class SeminarsController extends AppController
         $user = $this->request->getAttribute('identity');
 
         // Only allow admins to add seminars
-        if ($user->role !== 'Admin') {
+        if ($user->role == 'Client') {
             $this->Flash->set(__('You are not authorized to delete seminars.'));
             return $this->redirect(['action' => 'index']);
         }
