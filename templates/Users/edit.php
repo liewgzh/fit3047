@@ -37,9 +37,6 @@ $currentUserIdentity = $this->request->getAttribute('identity');
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');
                     echo $this->Form->control('email');
-                    if ($currentUserIdentity->role === 'Admin') {
-                        echo $this->Form->control('role');
-                    }
                     echo $this->Form->control('gender');
                     echo $this->Form->control('date_of_birth');
                     echo $this->Form->control('phone_number');

@@ -74,6 +74,12 @@ class ServicesTable extends Table
         $validator
             ->integer('duration')
             ->maxLength('duration', 3)
+            ->add('duration', 'validFormat', [
+                'rule' => function ($value) {
+                    return is_numeric($value) && $value >= 0;
+                },
+                'message' => 'Please enter a positive number for the duration'
+            ])
             ->requirePresence('duration', 'create')
             ->notEmptyString('duration');
 
