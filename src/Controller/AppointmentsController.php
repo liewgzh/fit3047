@@ -98,9 +98,11 @@ class AppointmentsController extends AppController
             $service = $this->Appointments->Services->get($appointment->service_id);
             $startDateTimeStr = $appointment->appointment_date->format('Y-m-d') . ' ' . $appointment->start_time->format('H:i:s');
             $startDateTime = new \DateTime($startDateTimeStr);
+            $startDateTime->setTimezone(new \DateTimeZone('Australia/Melbourne'));
 
             // Check if the appointment date is in the past
             $currentTime = new \DateTime();
+            $currentTime->setTimezone(new \DateTimeZone('Australia/Melbourne'));
             if ($startDateTime < $currentTime) {
                 $this->Flash->error('Cannot add appointments in the past.');
             } else {
@@ -249,6 +251,22 @@ class AppointmentsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function archived()
+    {
+     $user = $this->request->getAttribute('identity');
+     if ($user->role === 'Admin') {
+     $this->Authorization->skipAuthorization();
+            $archivedAppointments = $this->Appointments->find('onlyTrashed');
+            $this->set(compact('archivedAppointments'));
+        }
+    else {
+    $this->Authorization->skipAuthorization();
+        $this->Flash->error('No permission to access this resource.');
+         return $this->redirect(['action' => '/']);
+        }
+    }
+
     public function guestadd()//appointment/add
     {
         $this->Authorization->skipAuthorization();

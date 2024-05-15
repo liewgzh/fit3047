@@ -88,6 +88,12 @@ $currentController = $this->getRequest()->getParam('controller');
                         <h6 class="collapse-header">Appointments</h6>
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'index']) ?>">View All Appointments</a>
                         <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'add']) ?>">Add Appointment</a>
+                        <?php
+                        $currentUser = $this->request->getAttribute('identity');
+                        if ($currentUser && $currentUser->role === 'Admin'):
+                        ?>
+                        <a class="collapse-item" href="<?= $this->Url->build(['controller' => 'Appointments', 'action' => 'archived']) ?>">Archived Appointments</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>

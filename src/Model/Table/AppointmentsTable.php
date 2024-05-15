@@ -41,6 +41,9 @@ class AppointmentsTable extends Table
     {
         parent::initialize($config);
 
+        // Appointment archive plugin
+        $this->addBehavior('Muffin/Trash.Trash', ['field' => 'deleted']);
+
         $this->setTable('appointments');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
