@@ -6,6 +6,7 @@ use DateTime;
 use DateInterval;
 use Cake\Mailer\Mailer;
 use Cake\View\JsonView;
+use Cake\I18n\FrozenTime;
 
 /**
  * Appointments Controller
@@ -97,11 +98,13 @@ class AppointmentsController extends AppController
             $service = $this->Appointments->Services->get($appointment->service_id);
             $startDateTimeStr = $appointment->appointment_date->format('Y-m-d') . ' ' . $appointment->start_time->format('H:i:s');
             $startDateTime = new \DateTime($startDateTimeStr);
+            $startDateTime->setTimezone(new \DateTimeZone('Australia/Melbourne'));
 
             // Check if the appointment date is in the past
             $currentTime = new \DateTime();
+            $currentTime->setTimezone(new \DateTimeZone('Australia/Melbourne'));
             if ($startDateTime < $currentTime) {
-                $this->Flash->set('Cannot add appointments in the past.');
+                $this->Flash->error('Cannot add appointments in the past.');
             } else {
                 $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
                 $appointment->end_time = $endTime->format('H:i:s');
@@ -109,14 +112,14 @@ class AppointmentsController extends AppController
                 $appointment->payment_status="Unpaid";
 
                 if ($this->Appointments->Conflicts($appointment)) {
-                    $this->Flash->set('This appointment time is already booked. Please choose a different time.');
+                    $this->Flash->error('This appointment time is already booked. Please choose a different time.');
                 } else {
                     if ($this->Appointments->save($appointment)) {
-                        $this->Flash->success(__('The appointment has been saved.'));
+                        $this->Flash->success('The appointment has been saved.');
                         $appointment = $this->Appointments->get($appointment->id, finder: 'all', contain: ['Clients']);
-                        
-                        
-                    
+
+
+
                         $mailer = new Mailer('default');
 
                         $mailer
@@ -124,19 +127,19 @@ class AppointmentsController extends AppController
                         ->setTo($appointment->client->email)
                         ->setSubject('Appointment Confirmation');
 
-                       
+
                         $mailer
                         ->viewBuilder()
                         ->setTemplate('appointment_confirmation');
 
-                                 
+
                         $mailer
                         ->setViewVars([
-                            'clientName' => $appointment->guest_name, 
-                            'appointmentDate' => $startDateTimeStr,  
+                            'clientName' => $appointment->guest_name,
+                            'appointmentDate' => $startDateTimeStr,
                         ]);
 
-                        
+
                         if (!$mailer->deliver()) {
                             $this->Flash->error('There was an issue sending the appointment confirmation email.');
                         }
@@ -144,7 +147,7 @@ class AppointmentsController extends AppController
                         return $this->redirect(['action' => 'index']);
 
                     }
-                    $this->Flash->set('The appointment could not be saved. Please, try again.');
+                    $this->Flash->error('The appointment could not be saved. Please, try again.');
                 }
             }
         }
@@ -178,7 +181,7 @@ class AppointmentsController extends AppController
         try {
             $this->Authorization->authorize($appointment);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->set('You are not allowed to edit this appointment.');
+            $this->Flash->error('You are not allowed to edit this appointment.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
@@ -198,7 +201,7 @@ class AppointmentsController extends AppController
                 $this->Flash->success(__('The appointment has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->set('The appointment could not be saved. Please, try again.');
+            $this->Flash->error('The appointment could not be saved. Please, try again.');
         }
         $clients = $this->Appointments->Clients->find('list', limit: 200)->all();
         $counsellors = $this->Appointments->Counsellors->find('list', limit: 200)->all();
@@ -217,23 +220,53 @@ class AppointmentsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $appointment = $this->Appointments->get($id);
+
         try {
             $this->Authorization->authorize($appointment);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->set('You are not allowed to delete this appointment.');
+            $this->Flash->error('You are not allowed to delete this appointment.');
             return $this->redirect([
                 'controller' => 'Pages',
                 'action' => 'display']);
         }
 
+        // Extract appointment date and time
+        $appointmentDate = $appointment->appointment_date;
+        $appointmentTime = new FrozenTime($appointment->start_time->format('H:i:s'), 'Australia/Melbourne');
+
+        // Combine appointment date and time into a single datetime object
+        $appointmentDateTime = new FrozenTime($appointmentDate->format('Y-m-d') . ' ' . $appointmentTime->format('H:i:s'), 'Australia/Melbourne');
+
+        // Check if appointment is within the next 30 minutes
+        if ($appointmentDateTime->isWithinNext('30 minutes')) {
+            $this->Flash->error('You cannot delete this appointment because it is less than 30 minutes away.');
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->Appointments->delete($appointment)) {
             $this->Flash->success(__('The appointment has been deleted.'));
         } else {
-            $this->Flash->set('The appointment could not be deleted. Please, try again.');
+            $this->Flash->error('The appointment could not be deleted. Please, try again.');
         }
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function archived()
+    {
+     $user = $this->request->getAttribute('identity');
+     if ($user->role === 'Admin') {
+     $this->Authorization->skipAuthorization();
+            $archivedAppointments = $this->Appointments->find('onlyTrashed');
+            $this->set(compact('archivedAppointments'));
+        }
+    else {
+    $this->Authorization->skipAuthorization();
+        $this->Flash->error('No permission to access this resource.');
+         return $this->redirect(['action' => '/']);
+        }
+    }
+
     public function guestadd()//appointment/add
     {
         $this->Authorization->skipAuthorization();
@@ -250,7 +283,7 @@ class AppointmentsController extends AppController
             // Check if the appointment date is in the past
                         $currentTime = new \DateTime();
                         if ($startDateTime < $currentTime) {
-                            $this->Flash->set('Cannot add appointments in the past.');
+                            $this->Flash->error('Cannot add appointments in the past.');
                         } else {
 
                             $endTime = (clone $startDateTime)->add(new \DateInterval("PT{$service->duration}M"));
@@ -259,11 +292,11 @@ class AppointmentsController extends AppController
                             $appointment->payment_status="Unpaid";
 
                             if ($this->Appointments->Conflicts($appointment)) {
-                                $this->Flash->set('This appointment time is already booked. Please choose a different time.');
+                                $this->Flash->error('This appointment time is already booked. Please choose a different time.');
                             } else {
                                 if ($this->Appointments->save($appointment)) {
                                     $this->Flash->success(__('The appointment has been saved.'));
- 
+
                                     $mailer = new Mailer('default');
 
                                     $mailer
@@ -278,9 +311,9 @@ class AppointmentsController extends AppController
 
                                     $mailer
                                     ->setViewVars([
-                                        'clientName' => $appointment->guest_name, 
-                                        'appointmentDate' => $startDateTimeStr,  
-                                        'serviceName'=> $serviceName                                
+                                        'clientName' => $appointment->guest_name,
+                                        'appointmentDate' => $startDateTimeStr,
+                                        'serviceName'=> $serviceName
                                     ]);
 
 
@@ -288,10 +321,10 @@ class AppointmentsController extends AppController
                                     if (!$mailer->deliver()) {
                                         $this->Flash->error('There was an issue sending the appointment confirmation email.');
                                     }
-                                    
+
                                     return $this->redirect(['action' => 'index']);
                                 }
-                                $this->Flash->set('The appointment could not be saved. Please, try again.');
+                                $this->Flash->error('The appointment could not be saved. Please, try again.');
                             }
                         }
         }

@@ -50,7 +50,7 @@ class ServicesController extends AppController
         try {
             $this->Authorization->authorize($service);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->set('You are not allowed to add a service.');
+            $this->Flash->error('You are not allowed to add a service.');
             return $this->redirect(['action' => 'index']);
         }
 
@@ -62,7 +62,7 @@ class ServicesController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->set('The service could not be saved. Please, try again.');
+            $this->Flash->error('The service could not be saved. Please, try again.');
         }
         $this->set(compact('service'));
     }
@@ -80,7 +80,7 @@ class ServicesController extends AppController
         try {
             $this->Authorization->authorize($service);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->set('You are not allowed to edit this service.');
+            $this->Flash->error('You are not allowed to edit this service.');
             return $this->redirect(['action' => 'index']);
         }
 
@@ -92,7 +92,7 @@ class ServicesController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->set('The service could not be saved. Please, try again.');
+            $this->Flash->error('The service could not be saved. Please, try again.');
         }
         $this->set(compact('service'));
     }
@@ -112,14 +112,14 @@ class ServicesController extends AppController
         try {
             $this->Authorization->authorize($service);
         } catch (\Authorization\Exception\ForbiddenException $e) {
-            $this->Flash->set('You are not allowed to delete this service.');
+            $this->Flash->error('You are not allowed to delete this service.');
             return $this->redirect(['action' => 'index']);
         }
 
         if ($this->Services->delete($service)) {
             $this->Flash->success(__('The service has been deleted.'));
         } else {
-            $this->Flash->set('The service could not be deleted. Please, try again.');
+            $this->Flash->error('The service could not be deleted. Please, try again.');
         }
 
         return $this->redirect(['action' => 'index']);

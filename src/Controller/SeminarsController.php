@@ -86,7 +86,7 @@ class SeminarsController extends AppController
                 $this->Flash->success(__('Your seminar has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->set(__('Unable to add your seminar.'));
+                $this->Flash->error(__('Unable to add your seminar.'));
             }
         }
         $this->set(compact('seminar'));
@@ -136,7 +136,7 @@ class SeminarsController extends AppController
                 $this->Flash->success(__('The seminar has been updated.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->set(__('The seminar could not be updated. Please, try again.'));
+            $this->Flash->error(__('The seminar could not be updated. Please, try again.'));
         }
         $this->set(compact('seminar'));
     }
@@ -167,7 +167,7 @@ class SeminarsController extends AppController
         if ($this->Seminars->delete($seminar)) {
             $this->Flash->success(__('The seminar has been deleted.'));
         } else {
-            $this->Flash->set(__('The seminar could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The seminar could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
     }
