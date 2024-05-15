@@ -49,10 +49,8 @@
     <div class="footer">
       <p>This email is addressed to <?= h($clientName) ?>.</p>
       <p>Please discard this email if it is not meant for you.</p>
-      <p>&copy; <?= date("Y"); ?></p>
+      
     </div>
   </div>
 </body>
 </html>
-
-
