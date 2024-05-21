@@ -1,20 +1,4 @@
-Structure of the repository
 
-Database folder: contains the sql file to be imported into phpMyAdmin
-Config folder: contains the files for paths, routing, and plugins
-Src folder: Important folder containing the ‘Controller, Model, and View’ folders that define the logic of the entities in the database, as well as code for the website pages.
-    Controller folder: Controllers for the appointments, pages, seminars, services, and users entities are stored here.
-	Model folder: Folders for the entities and database tables are stored here.
-    View folder: Stores the AppView file which contains code for the appointments form layout.
-Templates folder: contains the folders for appointments, pages, seminars, services, and users. Each of these contain the layout files for how the page is coded and displayed.
-Webroot folder: contains a few important folders- content blocks images, css files, javascript files, user images, and seminar videos.
-    Content-blocks/uploads folder: stores the images for the main logo of the website.
-    Frontend folder: stores the images used on the main homepage.
-    Img folder: stores placeholder images (not important),
-    Css/js folders: stores the css and javascript files respectively.
-    User_images folder: stores the profile pictures of users of the website.
-    Videos folder: stores the seminar videos in mp4 or video format.
-Lastly, the repository contains several other files like composer.json and index.php that do not need to be modified.
 ![image](https://github.com/liewgzh/fit3047/assets/170413539/c8f13a7d-1081-42f7-8eaa-84aff88c9d51)
 
 # CakePHP Application Skeleton
